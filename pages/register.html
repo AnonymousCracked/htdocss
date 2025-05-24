@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Corazones Peludos S.A</title>
+    <link rel="icon" href="../img/corazones-peludos-mejor.PNG">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Crear Cuenta</h1>
+    </header>
+    <main class="register-container">
+        <form id="registerForm" action="registro_usuario.php" method="POST">
+            <label for="name">Nombre Completo:</label>
+            <input type="text" id="name" name="name" placeholder="Tu nombre completo" minlength="3" maxlength="35" required>
+
+            <label for="email">Correo ElectrÃ³nico:</label>
+            <input type="email" id="email" name="email" placeholder="Tu correo" maxlength="40" required>
+
+            <label for="password">ContraseÃ±a:</label>
+            <input type="password" id="password" name="password" placeholder="Tu contraseÃ±a" minlength="8" maxlength="64" required>
+
+            <label for="confirmPassword">Confirmar ContraseÃ±a:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Repite tu contraseÃ±a" minlength="8" maxlength="64" required>
+
+            <label for="terms">
+                <input type="checkbox" id="terms" name="terms" required>
+                Acepto los <a href="terms.html">TÃ©rminos y Condiciones</a>
+            </label>
+            
+            <center><button type="submit">Registrarse</button></center>
+        </form>
+        <p id="errorMessage" class="error-message"></p>
+        <p class="login-link">Â¿Ya tienes una cuenta? <a href="login.html">Inicia sesiÃ³n aquÃ­</a></p>
+        <button class="home-button" onclick="location.href='index.html'">Volver a la PÃ¡gina Principal</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 Adopta una Mascota - Todos los derechos reservados.</p>
+    </footer>
+    <script src="../assets/js/scriptRegister.js"></script>
+</body>
+</html>

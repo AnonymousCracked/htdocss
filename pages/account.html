@@ -1,0 +1,1067 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Cuenta - Corazones Peludos S.A</title>
+    <link rel="icon" href="../img/corazones-peludos-mejor.PNG">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <style>
+        /* Estilos para las cartas de mascotas */
+        .pets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pet-card {
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            padding: 15px;
+            background: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            border-color: #ff6f61;
+        }
+
+        .pet-card.selected {
+            border-color: #ff6f61;
+            background: #fff5f5;
+            transform: translateY(-3px);
+        }
+
+        .pet-card.adopted {
+            opacity: 0.6;
+            cursor: not-allowed;
+            background: #f5f5f5;
+        }
+
+        .pet-card.adopted::after {
+            content: "ADOPTADO";
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pet-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .pet-info h4 {
+            margin: 0 0 8px 0;
+            color: #333;
+            font-size: 18px;
+        }
+
+        .pet-info p {
+            margin: 4px 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .pet-badge {
+            display: inline-block;
+            background: #ff6f61;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin: 2px;
+        }
+
+        .adoption-form-container {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            display: none;
+        }
+
+        .selected-pet-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #4caf50;
+        }
+
+        .filters-container {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f5f5f5;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
+        .filter-btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .filter-btn.active {
+            background: #ff6f61;
+            font-weight: bold;
+        }
+
+        .filter-btn:hover {
+            opacity: 0.8;
+        }
+
+        #loading-pets {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-style: italic;
+        }
+
+        /* Estilos para notificaciones toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 400px;
+        }
+
+        .toast {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 16px 20px;
+            border-left: 4px solid;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            opacity: 0;
+            position: relative;
+            max-width: 100%;
+            word-wrap: break-word;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            border-left-color: #4caf50;
+        }
+
+        .toast.error {
+            border-left-color: #f44336;
+        }
+
+        .toast.info {
+            border-left-color: #2196f3;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .toast-message {
+            color: #666;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .toast-close:hover {
+            color: #666;
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: #4caf50;
+            transition: width linear;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .toast.success .toast-progress {
+            background: #4caf50;
+        }
+
+        .toast.error .toast-progress {
+            background: #f44336;
+        }
+
+        .toast.info .toast-progress {
+            background: #2196f3;
+        }
+
+        /* Responsive para mÃ³viles */
+        @media (max-width: 480px) {
+            .toast-container {
+                top: 10px;
+                right: 10px;
+                left: 10px;
+                max-width: none;
+            }
+
+            .toast {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Mi Cuenta</h1>
+    </header>
+
+    <!-- Container para notificaciones toast -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <main class="account-container">
+        <div class="account-menu">
+            <ul>
+                <li><a href="#" onclick="showSection('adoption-history'); setActive(this)">Historial de solicitudes de
+                        adopciÃ³n</a></li>
+                <li><a href="#" onclick="showSection('user-info'); setActive(this)" class="active">InformaciÃ³n del
+                        usuario</a></li>
+                <li><a href="#" onclick="showSection('adoption-request'); setActive(this)">Solicitar AdopciÃ³n</a></li>
+                <li><a href="#" onclick="location.href='index.html'">Pagina principal</a></li>
+                <li><a href="#" onclick="logout()">Cerrar sesiÃ³n</a></li>
+            </ul>
+        </div>
+
+        <div class="account-content">
+            <!-- SecciÃ³n de Historial de AdopciÃ³n -->
+            <div id="adoption-history" class="account-section">
+                <h2>Historial de solicitudes de adopciÃ³n</h2>
+                <p>AquÃ­ aparecerÃ¡n tus solicitudes de adopciÃ³n anteriores.</p>
+                <div id="adoption-requests-list"></div>
+            </div>
+
+            <!-- SecciÃ³n de InformaciÃ³n del Usuario -->
+            <div id="user-info" class="account-section" style="display:block;">
+                <h2>InformaciÃ³n del usuario</h2>
+                <div class="user-details">
+                    <div class="info-row">
+                        <strong>Nombre:</strong>
+                        <span id="user-name"></span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>Correo electrÃ³nico:</strong>
+                        <span id="user-email"></span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>TelÃ©fono:</strong>
+                        <span id="user-phone">No registrado</span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>DirecciÃ³n:</strong>
+                        <span id="user-address">No registrada</span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>Edad:</strong>
+                        <span id="user-age">No registrada</span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>Experiencia con mascotas:</strong>
+                        <span id="user-experience" class="long-text">No registrada</span>
+                    </div>
+
+                    <div class="info-row">
+                        <strong>Fecha de registro:</strong>
+                        <span id="user-register-date"></span>
+                    </div>
+                </div>
+                <button onclick="showEditForm()">Editar informaciÃ³n</button>
+
+                <div id="edit-user-form" style="display:none;">
+                    <h3>Editar informaciÃ³n</h3>
+                    <form id="updateForm">
+                        <label for="edit-name">Nombre Completo:</label>
+                        <input type="text" id="edit-name" name="edit-name" minlength="3" maxlength="35" required>
+
+                        <label for="edit-email">Correo ElectrÃ³nico:</label>
+                        <input type="email" id="edit-email" name="edit-email" maxlength="40" required>
+
+                        <label for="edit-phone">TelÃ©fono:</label>
+                        <input type="tel" id="edit-phone" name="edit-phone" maxlength="10" placeholder="Ej: 6561234567"
+                            pattern="[0-9]+" title="Solo numeros" required>
+
+                        <label for="edit-address">DirecciÃ³n:</label>
+                        <input id="edit-address" name="edit-address" rows="3" placeholder="Tu direcciÃ³n completa" maxlength="40" required></input>
+
+                        <label for="edit-age">Edad:</label>
+                        <input type="number" id="edit-age" name="edit-age" min="18" max="99" placeholder="Tu edad" required>
+
+                        <label for="edit-experience">Experiencia con mascotas:</label>
+                        <textarea id="edit-experience" name="edit-experience"
+                            placeholder="Describe tu experiencia con mascotas (Min 70 letras - Max 300 letras)" style="width: 25rem; height: 6rem;" minlength="70" maxlength="300" required></textarea>
+
+                        <label for="current-password">ContraseÃ±a actual (para confirmar cambios):</label>
+                        <input type="password" id="current-password" name="current-password" minlength="8" maxlength="64" required>
+
+                        <label for="new-password">Nueva contraseÃ±a (opcional):</label>
+                        <input type="password" id="new-password" name="new-password" minlength="8" maxlength="64" placeholder="Dejar vacÃ­o para mantener la actual">
+
+                        <label for="confirm-new-password">Confirmar nueva contraseÃ±a:</label>
+                        <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8" maxlength="64" placeholder="Confirmar nueva contraseÃ±a">
+
+                        <button type="submit">Guardar cambios</button>
+                        <button type="button" onclick="hideEditForm()">Cancelar</button>
+                    </form>
+                    <p id="update-error-message" class="error-message" style="color: red; margin-top: 10px;"></p>
+                    <p id="update-success-message" class="success-message" style="color: green; margin-top: 10px;"></p>
+                </div>
+            </div>
+
+            <!-- SecciÃ³n de Solicitud de AdopciÃ³n -->
+            <div id="adoption-request" class="account-section">
+                <h2>Solicitud de AdopciÃ³n</h2>
+                <div id="adoption-request-content">
+                    <!-- Contenido se cargarÃ¡ dinÃ¡micamente segÃºn si es adoptante o no -->
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <p>&copy; 2025 Adopta una Mascota - Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="../assets/js/scriptEditarInfo.js"></script>
+    <script>
+        // Variables globales
+        let allPets = [];
+        let selectedPet = null;
+        let currentPetFilter = 'todas';
+
+        // Sistema de notificaciones toast
+        function showToast(title, message, type = 'success', duration = 5000) {
+            const container = document.getElementById('toast-container');
+
+            // Crear elemento toast
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+
+            // Iconos segÃºn el tipo
+            const icons = {
+                success: 'ðŸŽ‰',
+                error: 'âŒ',
+                info: 'â„¹ï¸'
+            };
+
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type] || 'ðŸ“¢'}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="removeToast(this.parentElement)">Ã—</button>
+                <div class="toast-progress"></div>
+            `;
+
+            // Agregar al container
+            container.appendChild(toast);
+
+            // Mostrar con animaciÃ³n
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 100);
+
+            // Barra de progreso
+            const progressBar = toast.querySelector('.toast-progress');
+            progressBar.style.width = '100%';
+            progressBar.style.transitionDuration = duration + 'ms';
+
+            setTimeout(() => {
+                progressBar.style.width = '0%';
+            }, 200);
+
+            // Auto remover despuÃ©s del tiempo especificado
+            setTimeout(() => {
+                removeToast(toast);
+            }, duration);
+
+            return toast;
+        }
+
+        function removeToast(toast) {
+            if (toast && toast.parentElement) {
+                toast.style.transform = 'translateX(100%)';
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    if (toast.parentElement) {
+                        toast.parentElement.removeChild(toast);
+                    }
+                }, 300);
+            }
+        }
+
+        // Verificar si el usuario es adoptante al cargar la pÃ¡gina
+        document.addEventListener('DOMContentLoaded', async function () {
+            await checkAdopterStatus();
+            loadAdoptionRequests();
+        });
+
+        // FunciÃ³n para verificar si el usuario es adoptante registrado
+        async function checkAdopterStatus() {
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    localStorage.setItem('isAdopter', 'false');
+                    return;
+                }
+
+                const response = await fetch('check_adopter.php?id=' + currentUser.id, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    localStorage.setItem('isAdopter', result.isAdopter);
+                    return result.isAdopter;
+                } else {
+                    localStorage.setItem('isAdopter', 'false');
+                    return false;
+                }
+            } catch (error) {
+                console.error('Error al verificar estado de adoptante:', error);
+                localStorage.setItem('isAdopter', 'false');
+                return false;
+            }
+        }
+
+        // FunciÃ³n para cargar mascotas disponibles
+        async function loadAvailablePets() {
+            try {
+                console.log('Cargando mascotas disponibles...');
+
+                const response = await fetch('../api/pets/get_pets.php', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                if (response.ok) {
+                    const pets = await response.json();
+                    allPets = pets;
+                    displayPets(pets);
+                } else {
+                    console.error('Error al cargar mascotas:', response.status);
+                    document.getElementById('pets-container').innerHTML = '<p>Error al cargar mascotas disponibles.</p>';
+                }
+            } catch (error) {
+                console.error('Error al cargar mascotas:', error);
+                document.getElementById('pets-container').innerHTML = '<p>Error de conexiÃ³n.</p>';
+            }
+        }
+
+        // FunciÃ³n para mostrar las mascotas (NUEVA LÃ“GICA)
+        function displayPets(pets) {
+            const container = document.getElementById('pets-container');
+
+            if (!pets || pets.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: #666; padding: 40px;">No hay mascotas disponibles en este momento.</p>';
+                return;
+            }
+
+            // Especies comunes (comparar en minÃºsculas)
+            const especiesComunes = ['perro', 'gato', 'conejo', 'ave'];
+
+            // Filtrar mascotas segÃºn el filtro actual
+            let filteredPets;
+
+            if (currentPetFilter === 'todas') {
+                filteredPets = pets;
+            } else if (currentPetFilter === 'otro') { // Cambiado de 'otros' a 'otro'
+                filteredPets = pets.filter(pet => {
+                    // Convertir a minÃºsculas para comparaciÃ³n
+                    const especie = pet.especie.toLowerCase();
+                    return !especiesComunes.includes(especie);
+                });
+            } else {
+                filteredPets = pets.filter(pet => pet.especie.toLowerCase() === currentPetFilter);
+            }
+
+            // NUEVA FUNCIONALIDAD: Filtrar mascotas que estÃ©n realmente disponibles
+            // Solo mostrar mascotas que:
+            // 1. Tengan estado 'disponible'
+            // 2. NO tengan solicitudes pendientes (has_pending_request = false)
+            filteredPets = filteredPets.filter(pet => {
+                return pet.estado === 'disponible' && !pet.has_pending_request;
+            });
+
+            if (filteredPets.length === 0) {
+                let mensaje = currentPetFilter === 'todas'
+                    ? 'No hay mascotas disponibles para adopciÃ³n en este momento.'
+                    : currentPetFilter === 'otro'
+                        ? 'No hay mascotas de otros tipos disponibles para adopciÃ³n en este momento.'
+                        : `No hay mascotas de tipo "${currentPetFilter}" disponibles para adopciÃ³n en este momento.`;
+
+                container.innerHTML = `<p style="text-align: center; color: #666; padding: 40px;">${mensaje}</p>`;
+                return;
+            }
+
+            const petsGrid = document.createElement('div');
+            petsGrid.className = 'pets-grid';
+
+            filteredPets.forEach(pet => {
+                const petCard = document.createElement('div');
+                petCard.className = 'pet-card';
+                petCard.onclick = () => selectPet(pet);
+
+                petCard.innerHTML = `
+                    <img src="${pet.imagen_ruta}" alt="${pet.nombre}" class="pet-image" onerror="this.src='../img/default-pet.png'">
+                    <div class="pet-info">
+                        <h4>ðŸ• ${pet.nombre}</h4>
+                        <p><strong>Edad:</strong> ${pet.edad} ${pet.edad === 1 ? 'aÃ±o' : 'aÃ±os'}</p>
+                        <p><strong>Raza:</strong> ${pet.raza}</p>
+                        <p><strong>Sexo:</strong> ${pet.sexo}</p>
+                        <p><strong>Salud:</strong> ${pet.estado_salud}</p>
+                        <div style="margin-top: 8px;">
+                            <span class="pet-badge">${pet.especie}</span>
+                            <span class="pet-badge" style="background: #2196f3;">Disponible</span>
+                        </div>
+                    </div>
+                `;
+
+                petsGrid.appendChild(petCard);
+            });
+
+            container.innerHTML = '';
+            container.appendChild(petsGrid);
+        }
+
+        // FunciÃ³n para seleccionar una mascota
+        function selectPet(pet) {
+            selectedPet = pet;
+
+            // Actualizar visual de selecciÃ³n
+            document.querySelectorAll('.pet-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+
+            // Mostrar formulario de adopciÃ³n
+            const formContainer = document.getElementById('adoption-form-container');
+            const selectedPetInfo = document.getElementById('selected-pet-info');
+
+            selectedPetInfo.innerHTML = `
+                <h4>ðŸŽ‰ Mascota seleccionada: </h4>
+                <p>${pet.nombre}</p>
+                <p><strong>Especie:</strong> ${pet.especie} | <strong>Raza:</strong> ${pet.raza} | <strong>Edad:</strong> ${pet.edad} aÃ±os</p>
+                <p><strong>Estado de salud:</strong> ${pet.estado_salud}</p>
+            `;
+
+            formContainer.style.display = 'block';
+
+            // Scroll hacia el formulario
+            formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // FunciÃ³n para filtrar mascotas por especie
+        function filterPets(especie) {
+            currentPetFilter = especie;
+
+            // Actualizar botones
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+
+            // Mostrar mascotas filtradas
+            displayPets(allPets);
+
+            // Resetear selecciÃ³n
+            selectedPet = null;
+            document.getElementById('adoption-form-container').style.display = 'none';
+        }
+
+        // FunciÃ³n para actualizar la UI segÃºn si es adoptante o no
+        async function updateAdoptionRequestUI(isAdopter) {
+            const adoptionRequestContent = document.getElementById('adoption-request-content');
+
+            // Verificar nuevamente por si acaso
+            const currentStatus = await checkAdopterStatus();
+            isAdopter = currentStatus || isAdopter;
+
+            if (isAdopter) {
+                // Mostrar selector de mascotas y formulario
+                adoptionRequestContent.innerHTML = `
+                    <div class="filters-container">
+                        <h4 style="margin: 0 0 10px 0; color: #333;">Filtrar mascotas por especie:</h4>
+                        <div class="filter-buttons">
+                            <button class="filter-btn active" onclick="filterPets('todas')">ðŸ¾ Todas</button>
+                            <button class="filter-btn" onclick="filterPets('perro')">ðŸ• Perros</button>
+                            <button class="filter-btn" onclick="filterPets('gato')">ðŸ± Gatos</button>
+                            <button class="filter-btn" onclick="filterPets('ave')">ðŸ¦ Aves</button>
+                            <button class="filter-btn" onclick="filterPets('otro')">ðŸ¹ Otros</button>
+                        </div>
+                    </div>
+
+                    <div id="loading-pets">Cargando mascotas disponibles...</div>
+                    <div id="pets-container"></div>
+
+                    <div id="adoption-form-container" class="adoption-form-container">
+                        <div id="selected-pet-info" class="selected-pet-info"></div>
+                        
+                        <form id="submit-adoption-form">
+                            <label for="adoption-reason">Â¿Por quÃ© quieres adoptar a esta mascota?</label>
+                            <textarea id="adoption-reason" name="adoption-reason" required 
+                                     style="width: 100%; height: 120px; margin-top: 10px; padding: 10px; border: 1px solid #ddd; border-radius: 4px;" 
+                                     minlength="20" maxlength="500"
+                                     placeholder="CuÃ©ntanos por quÃ© quieres adoptar a esta mascota, tu experiencia con animales, y cÃ³mo planeas cuidarla..."></textarea>
+                            <small style="color: #666;">MÃ­nimo 20 caracteres, mÃ¡ximo 500.</small>
+                            
+                            <button type="submit" style="margin-top: 15px; background: #ff6f61; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                                ðŸ’Œ Enviar Solicitud de AdopciÃ³n
+                            </button>
+                        </form>
+                        <p id="adoption-message" style="margin-top: 15px;"></p>
+                    </div>
+                `;
+
+                // Cargar mascotas disponibles
+                setTimeout(() => {
+                    document.getElementById('loading-pets').style.display = 'none';
+                    loadAvailablePets();
+                }, 500);
+
+                // Agregar evento al formulario
+                setTimeout(() => {
+                    const form = document.getElementById('submit-adoption-form');
+                    if (form) {
+                        form.addEventListener('submit', function (e) {
+                            e.preventDefault();
+                            submitAdoptionRequest();
+                        });
+                    }
+                }, 1000);
+
+            } else {
+                // Mostrar mensaje para registrarse como adoptante
+                adoptionRequestContent.innerHTML = `
+                    <div class="alert alert-info" style="padding: 20px; background: #e3f2fd; border: 1px solid #90caf9; border-radius: 8px; text-align: center;">
+                        <h3 style="color: #1976d2; margin-top: 0;">Â¡Ãšnete a nuestra familia de adoptantes! ðŸ </h3>
+                        <p style="font-size: 16px; margin: 15px 0;">Para solicitar la adopciÃ³n de una mascota, primero debes registrarte como adoptante completando tu informaciÃ³n personal.</p>
+                        <button onclick="registerAsAdopter()" style="background: #ff6f61; color: white; padding: 12px 24px; border: none; border-radius: 6px; cursor: pointer; font-size: 16px; font-weight: bold;">
+                            ðŸ“ Registrarme como Adoptante
+                        </button>
+                        <p class="small" style="margin-top: 10px; color: #666;">(SerÃ¡s redirigido a completar tu informaciÃ³n)</p>
+                    </div>
+                `;
+            }
+        }
+
+        // FunciÃ³n para registrar al usuario como adoptante
+        function registerAsAdopter() {
+            // Mostrar el formulario de ediciÃ³n
+            showSection('user-info');
+            setActive(document.querySelector('.account-menu a[onclick*="user-info"]'));
+            showEditForm();
+
+            // Mostrar mensaje explicativo
+            const successMsg = document.getElementById('update-success-message');
+            successMsg.textContent = 'Por favor completa y guarda tu informaciÃ³n para registrarte como adoptante';
+            successMsg.style.display = 'block';
+            successMsg.style.color = 'blue'; // Cambiar color para mensaje informativo
+
+            // Ocultar mensaje de error si estÃ¡ visible
+            document.getElementById('update-error-message').style.display = 'none';
+        }
+
+        async function submitAdoptionRequest() {
+            try {
+                // Validaciones iniciales
+                if (!selectedPet) {
+                    showToast('Error', 'Por favor selecciona una mascota primero', 'error', 4000);
+                    return;
+                }
+
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) {
+                    showToast('Error', 'No se encontrÃ³ informaciÃ³n de usuario', 'error', 4000);
+                    return;
+                }
+
+                const reason = document.getElementById('adoption-reason').value;
+                if (!reason || reason.length < 20) {
+                    showToast('Error', 'Por favor escribe al menos 20 caracteres explicando por quÃ© quieres adoptar', 'error', 4000);
+                    return;
+                }
+
+                // PRIMERA CONFIRMACIÃ“N usando toast + confirm nativo
+                const firstConfirmation = confirm(`Â¿EstÃ¡s segur@ que deseas solicitar la adopciÃ³n de ${selectedPet.nombre}?\n\nEspecie: ${selectedPet.especie}\nEdad: ${selectedPet.edad} aÃ±os\n\nTu solicitud serÃ¡ revisada por nuestro equipo.`);
+
+                if (!firstConfirmation) {
+                    // SEGUNDA CONFIRMACIÃ“N de cancelaciÃ³n
+                    const secondConfirmation = confirm('Â¿EstÃ¡s seguro de cancelar la solicitud?\n\nLa mascota permanecerÃ¡ disponible para adopciÃ³n.');
+
+                    if (secondConfirmation) {
+                        showToast('OperaciÃ³n cancelada', 'No se ha enviado la solicitud de adopciÃ³n', 'info', 3000);
+                    }
+                    return;
+                }
+
+                // Mostrar carga
+                const loadingToast = showToast('Procesando', 'Enviando tu solicitud de adopciÃ³n...', 'info', 0);
+
+                // Enviar datos al servidor
+                const response = await fetch('../api/adoption/submit_adoption.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({
+                        user_id: currentUser.id,
+                        pet_id: selectedPet.id,
+                        motivo: reason
+                    })
+                });
+
+                // Cerrar toast de carga
+                removeToast(loadingToast);
+
+                if (!response.ok) {
+                    throw new Error('Error al enviar la solicitud al servidor');
+                }
+
+                // Actualizar estado de la mascota
+                await fetch(`update_pet_status.php?id=${selectedPet.id}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    },
+                    body: JSON.stringify({ estado: 'en_revision' })
+                });
+
+                // Mostrar Ã©xito
+                showToast(
+                    'Â¡Solicitud enviada!',
+                    `Hemos recibido tu solicitud para adoptar a ${selectedPet.nombre}. Te contactaremos pronto.`,
+                    'success',
+                    5000
+                );
+
+                // Resetear UI
+                resetAdoptionFormUI();
+                await loadAvailablePets();
+                await loadAdoptionRequests();
+
+            } catch (error) {
+                showToast(
+                    'Error',
+                    error.message || 'OcurriÃ³ un problema al enviar la solicitud',
+                    'error',
+                    5000
+                );
+            }
+        }
+
+        // FunciÃ³n auxiliar para resetear el formulario
+        function resetAdoptionFormUI() {
+            document.getElementById('submit-adoption-form').reset();
+            selectedPet = null;
+            document.querySelectorAll('.pet-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            document.getElementById('adoption-form-container').style.display = 'none';
+            document.getElementById('adoption-message').textContent = '';
+        }
+
+        // FunciÃ³n para cargar el historial de solicitudes del usuario
+        async function loadAdoptionRequests() {
+            try {
+                const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+                if (!currentUser) return;
+
+                const response = await fetch('get_user_adoptions.php?user_id=' + currentUser.id, {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                if (response.ok) {
+                    const requests = await response.json();
+                    const requestsList = document.getElementById('adoption-requests-list');
+                    requestsList.innerHTML = '';
+
+                    if (requests.length === 0) {
+                        requestsList.innerHTML = '<p>No tienes solicitudes de adopciÃ³n.</p>';
+                        return;
+                    }
+
+                    requests.forEach(request => {
+                        const requestElement = document.createElement('div');
+                        requestElement.className = 'request-item';
+                        requestElement.style.cssText = `
+                            border: 1px solid #ddd;
+                            margin: 10px 0;
+                            padding: 15px;
+                            border-radius: 8px;
+                            background-color: #f9f9f9;
+                        `;
+
+                        let estadoColor = '#666';
+                        if (request.estado === 'pendiente') estadoColor = '#ff9800';
+                        if (request.estado === 'aprobado') estadoColor = '#4caf50';
+                        if (request.estado === 'rechazado') estadoColor = '#f44336';
+
+                        requestElement.innerHTML = `
+                            <div class="request-info">
+                                <p><strong>Mascota ID:</strong> ${request.id_mascota}</p>
+                                <p><strong>Fecha:</strong> ${request.fecha_solicitud}</p>
+                                <p><strong>Estado:</strong> <span style="color: ${estadoColor}; font-weight: bold; text-transform: uppercase; background: ${estadoColor}20; padding: 4px 8px; border-radius: 4px;">${request.estado}</span></p>
+                                ${request.motivo ? `<p><strong>Motivo:</strong> ${request.motivo}</p>` : ''}
+                            </div>
+                            ${request.estado === 'pendiente' ? `
+                                <div class="request-actions" style="margin-top: 10px;">
+                                    <button onclick="deleteAdoptionRequest(${request.id})" 
+                                            style="background: #f44336; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
+                                        Cancelar Solicitud
+                                    </button>
+                                </div>
+                            ` : ''}
+                        `;
+                        requestsList.appendChild(requestElement);
+                    });
+                }
+            } catch (error) {
+                console.error('Error al cargar solicitudes:', error);
+            }
+        }
+
+        // FunciÃ³n corregida para eliminar solicitud de adopciÃ³n
+        async function deleteAdoptionRequest(requestId) {
+            if (!confirm('Â¿EstÃ¡s seguro de que deseas eliminar esta solicitud de adopciÃ³n?')) {
+                return;
+            }
+
+            try {
+                // Mostrar toast de carga
+                const loadingToast = showToast('Procesando', 'Cancelando tu solicitud de adopciÃ³n...', 'info', 0);
+
+                // SIMPLIFICADO: Solo eliminar la solicitud, el PHP se encarga del resto
+                const response = await fetch(`delete_adoption_request.php?id=${requestId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                });
+
+                // Cerrar toast de carga
+                removeToast(loadingToast);
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'Error al eliminar la solicitud');
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Mostrar notificaciÃ³n de Ã©xito
+                    showToast(
+                        'Solicitud cancelada',
+                        'La solicitud de adopciÃ³n ha sido eliminada correctamente. La mascota volverÃ¡ a estar disponible.',
+                        'success',
+                        4000
+                    );
+
+                    // Recargar las listas para reflejar los cambios
+                    await loadAvailablePets();  // Esto mostrarÃ¡ la mascota como disponible nuevamente
+                    await loadAdoptionRequests(); // Esto actualizarÃ¡ el historial
+
+                } else {
+                    throw new Error(result.message || 'Error desconocido');
+                }
+
+            } catch (error) {
+                console.error('Error al eliminar solicitud:', error);
+
+                // Mostrar notificaciÃ³n de error
+                showToast(
+                    'Error al cancelar',
+                    error.message || 'OcurriÃ³ un problema al cancelar la solicitud',
+                    'error',
+                    5000
+                );
+            }
+        }
+
+        // FunciÃ³n para mostrar secciones
+        async function showSection(sectionId) {
+            // Ocultar todas las secciones
+            const sections = document.querySelectorAll('.account-section');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+
+            // Mostrar la secciÃ³n seleccionada
+            document.getElementById(sectionId).style.display = 'block';
+
+            // Si es la secciÃ³n de solicitud de adopciÃ³n, verificar estado
+            if (sectionId === 'adoption-request') {
+                await checkAdopterStatus();
+                updateAdoptionRequestUI(localStorage.getItem('isAdopter') === 'true');
+            }
+        }
+
+        // FunciÃ³n para marcar elemento activo en el menÃº
+        function setActive(element) {
+            document.querySelectorAll('.account-menu a').forEach(a => {
+                a.classList.remove('active');
+            });
+            element.classList.add('active');
+        }
+
+        // FunciÃ³n logout
+        function logout() {
+            console.log('Cerrando sesiÃ³n...');
+
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (user.id) {
+                // Limpiar datos especÃ­ficos del usuario
+                sessionStorage.removeItem(`mascotaAdopcion_${user.id}`);
+                sessionStorage.removeItem(`formularioAdopcionTemp_${user.id}`);
+                localStorage.removeItem(`lastPetAdoption_${user.id}`);
+            }
+
+            // Limpiar TODOS los datos de sesiÃ³n
+            localStorage.removeItem('token');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('isAdopter');
+            sessionStorage.removeItem('mascotaAdopcion');
+            sessionStorage.removeItem('formularioAdopcionTemp');
+            localStorage.removeItem('lastPetAdoption');
+
+            // Mostrar notificaciÃ³n de logout
+            showToast(
+                'SesiÃ³n cerrada',
+                'Has cerrado sesiÃ³n correctamente. Â¡Hasta pronto!',
+                'info',
+                3000
+            );
+
+            // Intentar cerrar sesiÃ³n en el servidor
+            fetch('logout.php', {
+                method: 'POST',
+                credentials: 'include'
+            }).finally(() => {
+                setTimeout(() => {
+                    console.log('Redirigiendo al login...');
+                    window.location.href = 'login.html';
+                }, 1000);
+            });
+        }
+
+        // Funciones para editar informaciÃ³n
+        function showEditForm() {
+            document.getElementById('edit-user-form').style.display = 'block';
+            document.getElementById('current-password').value = '';
+        }
+
+        function hideEditForm() {
+            document.getElementById('edit-user-form').style.display = 'none';
+        }
+
+        // FunciÃ³n para mostrar toast cuando se actualiza informaciÃ³n (opcional)
+        // Puedes llamar esta funciÃ³n desde scriptEditarInfo.js cuando sea exitosa la actualizaciÃ³n
+        window.showSuccessToast = function (message) {
+            showToast(
+                'InformaciÃ³n actualizada',
+                message || 'Tu informaciÃ³n ha sido actualizada correctamente.',
+                'success',
+                4000
+            );
+        };
+
+        window.showErrorToast = function (message) {
+            showToast(
+                'Error al actualizar',
+                message || 'Hubo un problema al actualizar tu informaciÃ³n.',
+                'error',
+                5000
+            );
+        };
+    </script>
+</body>
+
+</html>
+
