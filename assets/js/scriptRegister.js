@@ -36,7 +36,7 @@
         })
             .then(response => response.text())
             .then(result => {
-                console.log('Respuesta del servidor:', result); // Para depuraciÃ³n
+                console.log('Respuesta del servidor:', result); // Para depuracion
 
                 if (result.includes('Usuario registrado correctamente')) {
                     errorMessage.textContent = '';

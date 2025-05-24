@@ -481,7 +481,7 @@
                     return;
                 }
 
-                const response = await fetch('check_adopter.php?id=' + currentUser.id, {
+                const response = await fetch('../api/users/check_adopter.php?id=' + currentUser.id, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -508,7 +508,7 @@
             try {
                 console.log('Cargando mascotas disponibles...');
 
-                const response = await fetch('get_pets.php', {
+                const response = await fetch('../api/pets/get_pets.php', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -539,7 +539,7 @@
             }
 
             // Especies comunes (comparar en minúsculas)
-            const especiesComunes = ['perro', 'gato', 'conejo', 'ave'];
+            const especiesComunes = ['perro', 'gato', 'ave'];
 
             // Filtrar mascotas según el filtro actual
             let filteredPets;
@@ -780,7 +780,7 @@
                 const loadingToast = showToast('Procesando', 'Enviando tu solicitud de adopción...', 'info', 0);
 
                 // Enviar datos al servidor
-                const response = await fetch('submit_adoption.php', {
+                const response = await fetch('../api/adoption/submit_adoption.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -801,7 +801,7 @@
                 }
 
                 // Actualizar estado de la mascota
-                await fetch(`update_pet_status.php?id=${selectedPet.id}`, {
+                await fetch(`../api/pets/update_pet_status.php?id=${selectedPet.id}`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -850,7 +850,7 @@
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (!currentUser) return;
 
-                const response = await fetch('get_user_adoptions.php?user_id=' + currentUser.id, {
+                const response = await fetch('../api/adoption/get_user_adoptions.php?user_id=' + currentUser.id, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -918,7 +918,7 @@
                 const loadingToast = showToast('Procesando', 'Cancelando tu solicitud de adopción...', 'info', 0);
 
                 // SIMPLIFICADO: Solo eliminar la solicitud, el PHP se encarga del resto
-                const response = await fetch(`delete_adoption_request.php?id=${requestId}`, {
+                const response = await fetch(`../api/adoption/delete_adoption_request.php?id=${requestId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1020,7 +1020,7 @@
             );
 
             // Intentar cerrar sesión en el servidor
-            fetch('logout.php', {
+            fetch('../api/auth/logout.php', {
                 method: 'POST',
                 credentials: 'include'
             }).finally(() => {

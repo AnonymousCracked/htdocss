@@ -233,7 +233,7 @@
                 }
                 
                 // Hacer la petición al servidor para obtener las mascotas disponibles
-                const response = await fetch('get_pets.php', {
+                const response = await fetch('../api/pets/get_pets.php', {
                     method: 'GET',
                     headers: headers
                 });
@@ -367,7 +367,7 @@ function createPetCard(pet) {
         `login.html`;
 
     petCard.innerHTML = `
-        <img src="${pet.imagen_ruta}" alt="${pet.nombre}" onerror="this.src='../img/default-pet.png'">
+        <img src="${pet.imagen_ruta}" alt="${pet.nombre}"">
         <h3>${pet.nombre}</h3>
         <p><strong>Edad:</strong> ${formatEdad(pet.edad)}</p>
         <p><strong>${tipoRaza}:</strong> ${valorRaza}</p>

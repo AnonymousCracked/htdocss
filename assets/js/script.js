@@ -235,7 +235,7 @@ function inicializarLogin() {
       // Crear FormData para enviar al servidor
       const formData = new FormData(this);
 
-      fetch('registro_usuario.php', {
+      fetch('../api/auth/registro_usuario.php', {
         method: 'POST',
         body: formData
       })

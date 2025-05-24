@@ -748,7 +748,7 @@
         async function loadPets() {
             try {
                 console.log('Cargando mascotas...');
-                const response = await fetch('get_pets.php', {
+                const response = await fetch('../api/pets/get_pets.php', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -821,7 +821,7 @@
             try {
                 console.log('Cargando solicitudes de adopción para admin...');
 
-                const response = await fetch('get_adoption_requests.php', {
+                const response = await fetch('../api/adoption/get_adoption_requests.php', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -859,7 +859,7 @@
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
                 if (!currentUser) return;
 
-                const response = await fetch('get_user_adoptions.php?user_id=' + currentUser.id, {
+                const response = await fetch('../api/adoption/get_user_adoptions.php?user_id=' + currentUser.id, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -944,7 +944,7 @@
             try {
                 console.log(`Aprobando solicitud ${requestId} para mascota ${petId}`);
 
-                const response = await fetch(`approve_request.php?id=${requestId}`, {
+                const response = await fetch(`../api/adoption/approve_request.php?id=${requestId}`, {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -1004,7 +1004,7 @@
             try {
                 console.log(`Rechazando solicitud ${requestId}`);
 
-                const response = await fetch(`reject_request.php?id=${requestId}`, {
+                const response = await fetch(`../api/adoption/reject_request.php?id=${requestId}`, {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token'),
@@ -1061,7 +1061,7 @@
             const formData = new FormData(form);
 
             try {
-                const response = await fetch('add_pet.php', {
+                const response = await fetch('../api/pets/add_pet.php', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1111,7 +1111,7 @@
         async function openEditModal(petId) {
             try {
                 // Obtener datos de la mascota
-                const response = await fetch(`get_pet.php?id=${petId}`, {
+                const response = await fetch(`../api/pets/get_pet.php?id=${petId}`, {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1165,7 +1165,7 @@
             const petName = formData.get('nombre');
 
             try {
-                const response = await fetch('update_pet.php', {
+                const response = await fetch('../api/pets/update_pet.php', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1210,7 +1210,7 @@
             }
 
             try {
-                const response = await fetch(`delete_pet.php?id=${petId}`, {
+                const response = await fetch(`../api/pets/delete_pet.php?id=${petId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1348,7 +1348,7 @@
                     return;
                 }
 
-                const response = await fetch(`delete_adoption_request.php?id=${requestId}`, {
+                const response = await fetch(`../api/adoption/delete_adoption_request.php?id=${requestId}`, {
                     method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${token}`,
@@ -1420,7 +1420,7 @@
             );
 
             // Intentar cerrar sesión en el servidor
-            fetch('logout.php', {
+            fetch('../api/auth/logout.php', {
                 method: 'POST',
                 credentials: 'include'
             }).finally(() => {

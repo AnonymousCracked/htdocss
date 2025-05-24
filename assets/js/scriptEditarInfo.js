@@ -103,7 +103,7 @@ function logout() {
     sessionStorage.removeItem('formularioAdopcionTemp');
     localStorage.removeItem('lastPetAdoption');
 
-    // Cerrar sesiÃ³n en el servidor
+    // Cerrar sesion en el servidor
     fetch('../api/auth/logout.php', {
         method: 'POST',
         credentials: 'include'
@@ -158,7 +158,7 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
         new_password: newPassword
     };
 
-    // Enviar actualizaciÃ³n al servidor
+    // Enviar actualizacion al servidor
     fetch('../api/users/update_user.php', {
         method: 'POST',
         headers: {
@@ -169,7 +169,7 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Actualizar informaciÃ³n local
+                // Actualizar informacion local
                 const updatedUser = {
                     ...currentUser,
                     name: updateData.nombre,
