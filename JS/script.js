@@ -42,6 +42,127 @@ function filtrarMascotas() {
 }
 
 // =============================================
+// SISTEMA DE TESTIMONIOS
+// =============================================
+
+function inicializarTestimonios() {
+  // Valoración con estrellas
+  document.querySelectorAll(".estrella").forEach((estrella) => {
+    estrella.addEventListener("click", function () {
+      const valor = this.getAttribute("data-value");
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      guardarValoracion(testimonioId, valor);
+      resaltarEstrellas(testimonioId, valor);
+    });
+  });
+
+  // Sistema de respuestas
+  document.querySelectorAll(".btn-respuesta").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const formulario = this.nextElementSibling.nextElementSibling;
+      formulario.style.display = "block";
+    });
+  });
+
+  document.querySelectorAll(".form-respuesta").forEach((formulario) => {
+    formulario.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const respuesta = this.querySelector("textarea").value;
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+
+      if (respuesta.trim()) {
+        guardarRespuesta(testimonioId, respuesta);
+        this.style.display = "none";
+        this.querySelector("textarea").value = "";
+        mostrarRespuestas(testimonioId);
+      }
+    });
+  });
+
+  // Eliminar comentarios
+  document.querySelectorAll(".btn-eliminar").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      eliminarComentario(testimonioId);
+    });
+  });
+
+  // Restablecer estrellas
+  document.querySelectorAll(".btn-restablecer").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      restablecerEstrellas(testimonioId);
+    });
+  });
+}
+
+// Guardar valoración en localStorage
+function guardarValoracion(testimonioId, valor) {
+  const valoraciones = JSON.parse(localStorage.getItem("valoraciones")) || {};
+  valoraciones[testimonioId] = valor;
+  localStorage.setItem("valoraciones", JSON.stringify(valoraciones));
+}
+
+// Resaltar estrellas seleccionadas
+function resaltarEstrellas(testimonioId, valor) {
+  const estrellas = document.querySelectorAll(
+    `.testimonio[data-id="${testimonioId}"] .estrella`
+  );
+  estrellas.forEach((estrella, index) => {
+    estrella.classList.toggle("seleccionada", index < valor);
+  });
+}
+
+// Guardar respuesta en localStorage con fecha
+function guardarRespuesta(testimonioId, respuesta) {
+  const respuestas = JSON.parse(localStorage.getItem("respuestas")) || {};
+  if (!respuestas[testimonioId]) respuestas[testimonioId] = [];
+
+  respuestas[testimonioId].push({
+    texto: respuesta,
+    fecha: new Date().toLocaleDateString(),
+  });
+
+  localStorage.setItem("respuestas", JSON.stringify(respuestas));
+}
+
+// Mostrar respuestas guardadas
+function mostrarRespuestas(testimonioId) {
+  const respuestas = JSON.parse(localStorage.getItem("respuestas")) || {};
+  const contenedor = document.querySelector(
+    `.testimonio[data-id="${testimonioId}"] .respuestas`
+  );
+
+  contenedor.innerHTML =
+    respuestas[testimonioId]
+      ?.map(
+        (respuesta) => `
+        <p>
+            <strong>Corazones Peludos:</strong> ${respuesta.texto}
+            <br><small>${respuesta.fecha}</small>
+        </p>
+    `
+      )
+      .join("") || "";
+}
+
+// Eliminar comentario
+function eliminarComentario(testimonioId) {
+  const respuestas = JSON.parse(localStorage.getItem("respuestas")) || {};
+  delete respuestas[testimonioId];
+  localStorage.setItem("respuestas", JSON.stringify(respuestas));
+  mostrarRespuestas(testimonioId);
+}
+
+// Restablecer estrellas
+function restablecerEstrellas(testimonioId) {
+  const valoraciones = JSON.parse(localStorage.getItem("valoraciones")) || {};
+  delete valoraciones[testimonioId];
+  localStorage.setItem("valoraciones", JSON.stringify(valoraciones));
+  resaltarEstrellas(testimonioId, 0);
+}
+
+// =============================================
 // GRÁFICAS ESTADÍSTICAS
 // =============================================
 
@@ -134,6 +255,40 @@ function debounce(func, wait) {
     timeout = setTimeout(() => func.apply(context, args), wait);
   };
 }
+
+// =============================================
+// CARGA INICIAL DE DATOS
+// =============================================
+
+function cargarDatos() {
+  // Cargar valoraciones
+  const valoraciones = JSON.parse(localStorage.getItem("valoraciones")) || {};
+  Object.keys(valoraciones).forEach((id) =>
+    resaltarEstrellas(id, valoraciones[id])
+  );
+
+  // Cargar respuestas
+  const respuestas = JSON.parse(localStorage.getItem("respuestas")) || {};
+  Object.keys(respuestas).forEach((id) => mostrarRespuestas(id));
+}
+
+// Efecto de carga progresiva de las tarjetas
+document.addEventListener("DOMContentLoaded", () => {
+  const cards = document.querySelectorAll(".refugio-card");
+  cards.forEach((card, index) => {
+    setTimeout(() => {
+      card.style.opacity = "1";
+      card.style.transform = "translateY(0)";
+    }, 150 * index);
+  });
+
+  // Inicializar todas las tarjetas como transparentes
+  cards.forEach((card) => {
+    card.style.opacity = "0";
+    card.style.transform = "translateY(20px)";
+    card.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+  });
+});
 
 // =============================================
 // INICIO DE SESIÓN
