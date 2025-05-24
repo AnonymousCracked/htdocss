@@ -118,7 +118,7 @@
             background: #2196f3;
         }
 
-        /* Estilos para modal de ediciÃ³n */
+        /* Estilos para modal de edición */
         .modal {
             display: none;
             position: fixed;
@@ -229,7 +229,7 @@
             margin: 5px 0;
         }
 
-        /* Responsive para mÃ³viles */
+        /* Responsive para móviles */
         @media (max-width: 480px) {
             .toast-container {
                 top: 10px;
@@ -279,7 +279,7 @@
             <label for="edit-pet-name">Nombre:</label>
             <input type="text" id="edit-pet-name" name="nombre" required>
 
-            <label for="edit-pet-age">Edad (aÃ±os):</label>
+            <label for="edit-pet-age">Edad (años):</label>
             <input type="number" id="edit-pet-age" name="edad" min="0" max="30" required>
 
             <label for="edit-pet-breed">Raza:</label>
@@ -339,22 +339,22 @@
     <main class="account-container">
         <div class="account-menu">
             <ul>
-                <li><a href="#" onclick="showSection('adoption-history'); setActive(this)">GestiÃ³n de Solicitudes de
-                        AdopciÃ³n</a></li>
-                <li><a href="#" onclick="showSection('user-info'); setActive(this)" class="active">InformaciÃ³n del
+                <li><a href="#" onclick="showSection('adoption-history'); setActive(this)">Gestión de Solicitudes de
+                        Adopción</a></li>
+                <li><a href="#" onclick="showSection('user-info'); setActive(this)" class="active">Información del
                         usuario</a></li>
                 <li id="admin-menu-item" style="display:none;">
                     <a href="#" onclick="showSection('admin-panel'); setActive(this)">Panel de Administrador</a>
                 </li>
                 <li><a href="#" onclick="location.href='index.html'">Pagina principal</a></li>
-                <li><a href="#" onclick="logout()">Cerrar sesiÃ³n</a></li>
+                <li><a href="#" onclick="logout()">Cerrar sesión</a></li>
             </ul>
         </div>
 
         <div class="account-content">
-            <!-- SecciÃ³n de Historial de AdopciÃ³n -->
+            <!-- Sección de Historial de Adopción -->
             <div id="adoption-history" class="account-section">
-                <h2>GestiÃ³n de Solicitudes de AdopciÃ³n</h2>
+                <h2>Gestión de Solicitudes de Adopción</h2>
 
                 <!-- Filtros de solicitudes -->
                 <div class="filters-container"
@@ -363,15 +363,15 @@
                     <div class="filter-buttons" style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button onclick="filterRequests('todas')" id="filter-todas"
                             style="background: #2196f3; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-weight: bold;">
-                            ðŸ“‹ Todas las solicitudes
+                            📋 Todas las solicitudes
                         </button>
                         <button onclick="filterRequests('pendiente')" id="filter-pendiente"
                             style="background: #ff9800; color: white; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer;">
-                            â³ Pendientes
+                            ⏳ Pendientes
                         </button>
                         <button onclick="filterRequests('rechazada')" id="filter-rechazado"
                             style="background: #f44336; color: white; border: none; padding: 8px 12px; border-radius: 4px; cursor: pointer;">
-                            âŒ Rechazadas
+                            ❌ Rechazadas
                         </button>
                     </div>
                     <p id="filter-status" style="margin: 10px 0 0 0; font-style: italic; color: #666;">
@@ -380,39 +380,39 @@
                 </div>
 
                 <div id="adoption-requests-list">
-                    <!-- Las solicitudes se cargarÃ¡n aquÃ­ dinÃ¡micamente -->
+                    <!-- Las solicitudes se cargarán aquí dinámicamente -->
                 </div>
             </div>
 
-            <!-- SecciÃ³n de InformaciÃ³n del Usuario -->
+            <!-- Sección de Información del Usuario -->
             <div id="user-info" class="account-section" style="display:block;">
-                <h2>InformaciÃ³n del usuario</h2>
+                <h2>Información del usuario</h2>
                 <div class="user-details">
                     <p><strong>Nombre:</strong> <span id="user-name"></span></p>
-                    <p><strong>Correo electrÃ³nico:</strong> <span id="user-email"></span></p>
-                    <p><strong>TelÃ©fono:</strong> <span id="user-phone">No registrado</span></p>
-                    <p><strong>DirecciÃ³n:</strong> <span id="user-address">No registrada</span></p>
+                    <p><strong>Correo electrónico:</strong> <span id="user-email"></span></p>
+                    <p><strong>Teléfono:</strong> <span id="user-phone">No registrado</span></p>
+                    <p><strong>Dirección:</strong> <span id="user-address">No registrada</span></p>
                     <p><strong>Edad:</strong> <span id="user-age">No registrada</span></p>
                     <p><strong>Experiencia con mascotas:</strong> <span id="user-experience">No registrada</span></p>
                     <p><strong>Fecha de registro:</strong> <span id="user-register-date"></span></p>
                 </div>
-                <button onclick="showEditForm()">Editar informaciÃ³n</button>
+                <button onclick="showEditForm()">Editar información</button>
 
                 <div id="edit-user-form" style="display:none;">
-                    <h3>Editar informaciÃ³n</h3>
+                    <h3>Editar información</h3>
                     <form id="updateForm">
                         <label for="edit-name">Nombre Completo:</label>
                         <input type="text" id="edit-name" name="edit-name" minlength="3" maxlength="35" required>
 
-                        <label for="edit-email">Correo ElectrÃ³nico:</label>
+                        <label for="edit-email">Correo Electrónico:</label>
                         <input type="email" id="edit-email" name="edit-email" maxlength="40" required>
 
-                        <label for="edit-phone">TelÃ©fono:</label>
+                        <label for="edit-phone">Teléfono:</label>
                         <input type="tel" id="edit-phone" name="edit-phone" maxlength="10" placeholder="Ej: 6561234567"
                             pattern="[0-9]+" title="Solo numeros" required>
 
-                        <label for="edit-address">DirecciÃ³n:</label>
-                        <input id="edit-address" name="edit-address" rows="3" maxlength="40" placeholder="Tu direcciÃ³n completa" required></input>
+                        <label for="edit-address">Dirección:</label>
+                        <input id="edit-address" name="edit-address" rows="3" maxlength="40" placeholder="Tu dirección completa" required></input>
 
                         <label for="edit-age">Edad:</label>
                         <input type="number" id="edit-age" name="edit-age" min="18" max="99" placeholder="Tu edad"
@@ -422,14 +422,14 @@
                         <textarea id="edit-experience" name="edit-experience"
                             placeholder="Describe tu experiencia con mascotas (Min 70 letras - Max 300 letras)" style="width: 25rem; height: 6rem;" minlength="70" maxlength="300" required></textarea>
 
-                        <label for="current-password">ContraseÃ±a actual (para confirmar cambios):</label>
+                        <label for="current-password">Contraseña actual (para confirmar cambios):</label>
                         <input type="password" id="current-password" name="current-password" minlength="8" maxlength="64" required>
 
-                        <label for="new-password">Nueva contraseÃ±a (opcional):</label>
-                        <input type="password" id="new-password" name="new-password" minlength="8" maxlength="64" placeholder="Dejar vacÃ­o para mantener la actual">
+                        <label for="new-password">Nueva contraseña (opcional):</label>
+                        <input type="password" id="new-password" name="new-password" minlength="8" maxlength="64" placeholder="Dejar vacío para mantener la actual">
 
-                        <label for="confirm-new-password">Confirmar nueva contraseÃ±a:</label>
-                        <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8" maxlength="64" placeholder="Confirmar nueva contraseÃ±a">
+                        <label for="confirm-new-password">Confirmar nueva contraseña:</label>
+                        <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8" maxlength="64" placeholder="Confirmar nueva contraseña">
 
                         <button type="submit">Guardar cambios</button>
                         <button type="button" onclick="hideEditForm()">Cancelar</button>
@@ -442,9 +442,9 @@
             <div id="admin-panel" class="account-section" style="display:none;">
                 <h2>Panel de Administrador</h2>
 
-                <!-- GestiÃ³n de Mascotas -->
+                <!-- Gestión de Mascotas -->
                 <div class="admin-section">
-                    <h3>GestiÃ³n de Mascotas</h3>
+                    <h3>Gestión de Mascotas</h3>
 
                     <!-- Formulario para agregar mascota -->
                     <div class="admin-subsection">
@@ -453,7 +453,7 @@
                             <label for="pet-name">Nombre:</label>
                             <input type="text" id="pet-name" name="nombre" minlength="2" maxlength="16" required>
 
-                            <label for="pet-age">Edad (aÃ±os):</label>
+                            <label for="pet-age">Edad (años):</label>
                             <input type="number" id="pet-age" name="edad" min="0" max="30" required>
 
                             <label for="pet-breed">Raza:</label>
@@ -500,11 +500,11 @@
                         <p id="add-pet-message" style="margin-top: 10px;"></p>
                     </div>
 
-                    <!-- Lista y gestiÃ³n de mascotas existentes -->
+                    <!-- Lista y gestión de mascotas existentes -->
                     <div class="admin-subsection">
                         <h4>Mascotas Existentes</h4>
                         <div id="pets-list">
-                            <!-- Las mascotas se cargarÃ¡n aquÃ­ dinÃ¡micamente -->
+                            <!-- Las mascotas se cargarán aquí dinámicamente -->
                         </div>
                     </div>
                 </div>
@@ -530,27 +530,27 @@
             const toast = document.createElement('div');
             toast.className = `toast ${type}`;
 
-            // Iconos segÃºn el tipo
+            // Iconos según el tipo
             const icons = {
-                success: 'âœ…',
-                error: 'âŒ',
-                info: 'â„¹ï¸'
+                success: '✅',
+                error: '❌',
+                info: 'ℹ️'
             };
 
             toast.innerHTML = `
-                <div class="toast-icon">${icons[type] || 'ðŸ“¢'}</div>
+                <div class="toast-icon">${icons[type] || '📢'}</div>
                 <div class="toast-content">
                     <div class="toast-title">${title}</div>
                     <div class="toast-message">${message}</div>
                 </div>
-                <button class="toast-close" onclick="removeToast(this.parentElement)">Ã—</button>
+                <button class="toast-close" onclick="removeToast(this.parentElement)">×</button>
                 <div class="toast-progress"></div>
             `;
 
             // Agregar al container
             container.appendChild(toast);
 
-            // Mostrar con animaciÃ³n
+            // Mostrar con animación
             setTimeout(() => {
                 toast.classList.add('show');
             }, 100);
@@ -564,7 +564,7 @@
                 progressBar.style.width = '0%';
             }, 200);
 
-            // Auto remover despuÃ©s del tiempo especificado
+            // Auto remover después del tiempo especificado
             setTimeout(() => {
                 removeToast(toast);
             }, duration);
@@ -584,7 +584,7 @@
             }
         }
 
-        // FunciÃ³n para verificar el rol del usuario al cargar la pÃ¡gina
+        // Función para verificar el rol del usuario al cargar la página
         document.addEventListener('DOMContentLoaded', function () {
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -592,7 +592,7 @@
                 document.getElementById('admin-menu-item').style.display = 'block';
                 console.log('Usuario es administrador, mostrando panel');
 
-                // Cargar solicitudes automÃ¡ticamente para admin
+                // Cargar solicitudes automáticamente para admin
                 setTimeout(() => {
                     loadAdoptionRequests();
                 }, 500);
@@ -606,7 +606,7 @@
             }
         });
 
-        // FunciÃ³n para filtrar solicitudes
+        // Función para filtrar solicitudes
         function filterRequests(estado) {
             currentFilter = estado;
 
@@ -639,7 +639,7 @@
             displayRequests(filteredRequests);
         }
 
-        // FunciÃ³n para mostrar las solicitudes en el DOM
+        // Función para mostrar las solicitudes en el DOM
         function displayRequests(requests) {
             const requestsList = document.getElementById('adoption-requests-list');
 
@@ -689,7 +689,7 @@
                     estadoBorder = '#f44336';
                 }
 
-                // Agregar borde izquierdo segÃºn el estado
+                // Agregar borde izquierdo según el estado
                 requestElement.style.borderLeft = `4px solid ${estadoBorder}`;
 
                 requestElement.innerHTML = `
@@ -699,41 +699,41 @@
                         </h4>
                         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
                             <div>
-                                <p><strong>ðŸ‘¤ Solicitante:</strong> ${request.nombre_usuario || 'No especificado'}</p>
-                                <p><strong>ðŸ“§ Email:</strong> ${request.email || 'No especificado'}</p>
-                                <p><strong>ðŸ“± TelÃ©fono:</strong> ${request.telefono || 'No registrado'}</p>
-                                <p><strong>ðŸ“ DirecciÃ³n:</strong> ${request.direccion || 'No registrada'}</p>
+                                <p><strong>👤 Solicitante:</strong> ${request.nombre_usuario || 'No especificado'}</p>
+                                <p><strong>📧 Email:</strong> ${request.email || 'No especificado'}</p>
+                                <p><strong>📱 Teléfono:</strong> ${request.telefono || 'No registrado'}</p>
+                                <p><strong>📍 Dirección:</strong> ${request.direccion || 'No registrada'}</p>
                             </div>
                             <div>
-                                <p><strong>ðŸ• Mascota:</strong> ${request.nombre_mascota || 'ID: ' + request.id_mascota}</p>
-                                <p><strong>ðŸ·ï¸ Raza:</strong> ${request.raza || 'No especificado'}</p>
-                                <p><strong>ðŸ¾ Especie:</strong> ${request.especie || 'No especificado'}</p>
-                                <p><strong>ðŸ“… Fecha:</strong> ${new Date(request.fecha_solicitud).toLocaleDateString()}</p>
+                                <p><strong>🐕 Mascota:</strong> ${request.nombre_mascota || 'ID: ' + request.id_mascota}</p>
+                                <p><strong>🏷️ Raza:</strong> ${request.raza || 'No especificado'}</p>
+                                <p><strong>🐾 Especie:</strong> ${request.especie || 'No especificado'}</p>
+                                <p><strong>📅 Fecha:</strong> ${new Date(request.fecha_solicitud).toLocaleDateString()}</p>
                             </div>
                         </div>
-                        <p><strong>ðŸ“Š Estado:</strong> 
+                        <p><strong>📊 Estado:</strong> 
                             <span style="color: ${estadoColor}; font-weight: bold; text-transform: uppercase; 
                                          background: ${estadoColor}20; padding: 4px 8px; border-radius: 4px;">
                                 ${request.estado}
                             </span>
                         </p>
-                        ${request.motivo ? `<p><strong>ðŸ’­ Motivo:</strong> <em>"${request.motivo}"</em></p>` : ''}
+                        ${request.motivo ? `<p><strong>💭 Motivo:</strong> <em>"${request.motivo}"</em></p>` : ''}
                     </div>
                     <div class="request-actions" style="margin-top: 20px; text-align: right; border-top: 1px solid #ddd; padding-top: 15px;">
                         ${request.estado === 'pendiente' ? `
                             <button onclick="approveRequest(${request.id}, ${request.id_mascota})" 
                                     style="background: #4caf50; color: white; border: none; padding: 10px 20px; 
                                            margin: 0 5px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                âœ… Aprobar Solicitud
+                                ✅ Aprobar Solicitud
                             </button>
                             <button onclick="rejectRequest(${request.id})" 
                                     style="background: #f44336; color: white; border: none; padding: 10px 20px; 
                                            margin: 0 5px; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                                âŒ Rechazar Solicitud
+                                ❌ Rechazar Solicitud
                             </button>
                         ` : `
                             <span style="color: #666; font-style: italic; padding: 10px;">
-                                ${request.estado === 'aprobada' ? 'âœ… Solicitud ya aprobada' : 'âŒ Solicitud ya rechazada'}
+                                ${request.estado === 'aprobada' ? '✅ Solicitud ya aprobada' : '❌ Solicitud ya rechazada'}
                             </span>
                         `}
                     </div>
@@ -748,7 +748,7 @@
         async function loadPets() {
             try {
                 console.log('Cargando mascotas...');
-                const response = await fetch('../api/pets/get_pets.php', {
+                const response = await fetch('get_pets.php', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -771,13 +771,13 @@
 
                         petElement.innerHTML = `
                             <div class="pet-header">
-                                <h4 style="margin: 0; color: #333;">ðŸ¾ ${pet.nombre}</h4>
+                                <h4 style="margin: 0; color: #333;">🐾 ${pet.nombre}</h4>
                                 <div class="pet-actions">
                                     <button class="btn btn-edit" onclick="openEditModal(${pet.id})">
-                                        âœï¸ Editar
+                                        ✏️ Editar
                                     </button>
                                     <button class="btn btn-delete" onclick="deletePet(${pet.id}, '${pet.nombre}')">
-                                        ðŸ—‘ï¸ Eliminar
+                                        🗑️ Eliminar
                                     </button>
                                 </div>
                             </div>
@@ -787,7 +787,7 @@
                                 </div>
                                 <div class="pet-info">
                                     <p><strong>ID:</strong> ${pet.id}</p>
-                                    <p><strong>Edad:</strong> ${pet.edad} ${pet.edad === 1 ? 'aÃ±o' : 'aÃ±os'}</p>
+                                    <p><strong>Edad:</strong> ${pet.edad} ${pet.edad === 1 ? 'año' : 'años'}</p>
                                     <p><strong>Raza:</strong> ${pet.raza}</p>
                                     <p><strong>Sexo:</strong> ${pet.sexo}</p>
                                     <p><strong>Estado de salud:</strong> ${pet.estado_salud}</p>
@@ -811,17 +811,17 @@
                 }
             } catch (error) {
                 console.error('Error al cargar mascotas:', error);
-                document.getElementById('pets-list').innerHTML = '<p>Error de conexiÃ³n.</p>';
+                document.getElementById('pets-list').innerHTML = '<p>Error de conexión.</p>';
             }
         }
         
 
-        // FunciÃ³n para cargar TODAS las solicitudes de adopciÃ³n (PARA ADMIN)
+        // Función para cargar TODAS las solicitudes de adopción (PARA ADMIN)
         async function loadAdoptionRequests() {
             try {
-                console.log('Cargando solicitudes de adopciÃ³n para admin...');
+                console.log('Cargando solicitudes de adopción para admin...');
 
-                const response = await fetch('../api/adoption/get_adoption_requests.php', {
+                const response = await fetch('get_adoption_requests.php', {
                     method: 'GET',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -844,16 +844,16 @@
                     const errorText = await response.text();
                     console.error('Error response:', errorText);
                     document.getElementById('adoption-requests-list').innerHTML =
-                        '<p style="color: red;">âŒ Error al cargar las solicitudes de adopciÃ³n.</p>';
+                        '<p style="color: red;">❌ Error al cargar las solicitudes de adopción.</p>';
                 }
             } catch (error) {
-                console.error('Error al cargar solicitudes de adopciÃ³n:', error);
+                console.error('Error al cargar solicitudes de adopción:', error);
                 document.getElementById('adoption-requests-list').innerHTML =
-                    '<p style="color: red;">âŒ Error de conexiÃ³n al cargar las solicitudes.</p>';
+                    '<p style="color: red;">❌ Error de conexión al cargar las solicitudes.</p>';
             }
         }
 
-        // FunciÃ³n para cargar solicitudes del usuario actual (NO ADMIN)
+        // Función para cargar solicitudes del usuario actual (NO ADMIN)
         async function loadUserAdoptionRequests() {
             try {
                 const currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -869,10 +869,10 @@
                 if (response.ok) {
                     const requests = await response.json();
                     const requestsList = document.getElementById('adoption-requests-list');
-                    requestsList.innerHTML = '<h3>Mis Solicitudes de AdopciÃ³n</h3>';
+                    requestsList.innerHTML = '<h3>Mis Solicitudes de Adopción</h3>';
 
                     if (requests.length === 0) {
-                        requestsList.innerHTML += '<p>No tienes solicitudes de adopciÃ³n.</p>';
+                        requestsList.innerHTML += '<p>No tienes solicitudes de adopción.</p>';
                         return;
                     }
 
@@ -917,15 +917,15 @@
         }
 
 
-        // FunciÃ³n para verificar autenticaciÃ³n
+        // Función para verificar autenticación
         function verifyAuth() {
             const token = localStorage.getItem('token');
             const currentUser = JSON.parse(localStorage.getItem('currentUser') || '{}');
 
             if (!token || !currentUser.id) {
                 showToast(
-                    'SesiÃ³n Expirada',
-                    'Tu sesiÃ³n ha expirado. Por favor inicia sesiÃ³n nuevamente.',
+                    'Sesión Expirada',
+                    'Tu sesión ha expirado. Por favor inicia sesión nuevamente.',
                     'error',
                     5000
                 );
@@ -935,11 +935,11 @@
             return true;
         }
 
-        // FunciÃ³n para aprobar solicitud (VERSIÃ“N FINAL CORREGIDA)
+        // Función para aprobar solicitud (VERSIÓN FINAL CORREGIDA)
         async function approveRequest(requestId, petId) {
             if (!verifyAuth()) return;
 
-            if (!confirm('Â¿EstÃ¡s seguro de que deseas aprobar esta solicitud?\n\nâš ï¸ ATENCIÃ“N: La mascota serÃ¡ ELIMINADA definitivamente del sistema.')) return;
+            if (!confirm('¿Estás seguro de que deseas aprobar esta solicitud?\n\n⚠️ ATENCIÓN: La mascota será ELIMINADA definitivamente del sistema.')) return;
 
             try {
                 console.log(`Aprobando solicitud ${requestId} para mascota ${petId}`);
@@ -953,7 +953,7 @@
                 });
 
                 if (response.status === 401) {
-                    showToast('SesiÃ³n Expirada', 'Token no vÃ¡lido. Inicia sesiÃ³n nuevamente.', 'error', 5000);
+                    showToast('Sesión Expirada', 'Token no válido. Inicia sesión nuevamente.', 'error', 5000);
                     logout();
                     return;
                 }
@@ -963,7 +963,7 @@
                     console.log('Solicitud aprobada:', result);
 
                     showToast(
-                        'Â¡Solicitud Aprobada!',
+                        '¡Solicitud Aprobada!',
                         `La solicitud #${requestId} ha sido aprobada correctamente y la mascota ha sido eliminada del sistema.`,
                         'success',
                         6000
@@ -987,7 +987,7 @@
             } catch (error) {
                 console.error('Error al aprobar solicitud:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor.',
                     'error',
                     5000
@@ -995,11 +995,11 @@
             }
         }
 
-        // FunciÃ³n para rechazar solicitud (VERSIÃ“N FINAL CORREGIDA)
+        // Función para rechazar solicitud (VERSIÓN FINAL CORREGIDA)
         async function rejectRequest(requestId) {
             if (!verifyAuth()) return;
 
-            if (!confirm('Â¿EstÃ¡s seguro de que deseas rechazar esta solicitud?\n\nLa mascota volverÃ¡ a estar disponible para adopciÃ³n.')) return;
+            if (!confirm('¿Estás seguro de que deseas rechazar esta solicitud?\n\nLa mascota volverá a estar disponible para adopción.')) return;
 
             try {
                 console.log(`Rechazando solicitud ${requestId}`);
@@ -1013,7 +1013,7 @@
                 });
 
                 if (response.status === 401) {
-                    showToast('SesiÃ³n Expirada', 'Token no vÃ¡lido. Inicia sesiÃ³n nuevamente.', 'error', 5000);
+                    showToast('Sesión Expirada', 'Token no válido. Inicia sesión nuevamente.', 'error', 5000);
                     logout();
                     return;
                 }
@@ -1047,7 +1047,7 @@
             } catch (error) {
                 console.error('Error al rechazar solicitud:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor.',
                     'error',
                     5000
@@ -1061,7 +1061,7 @@
             const formData = new FormData(form);
 
             try {
-                const response = await fetch('../api/pets/add_pet.php', {
+                const response = await fetch('add_pet.php', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1072,7 +1072,7 @@
                 const result = await response.json();
                 if (response.ok) {
                     showToast(
-                        'Â¡Mascota Agregada!',
+                        '¡Mascota Agregada!',
                         `${formData.get('nombre')} ha sido agregada exitosamente al sistema.`,
                         'success',
                         5000
@@ -1096,7 +1096,7 @@
             } catch (error) {
                 console.error('Error al agregar mascota:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor para agregar la mascota.',
                     'error',
                     5000
@@ -1107,7 +1107,7 @@
             }
         }
 
-        // FunciÃ³n para abrir modal de ediciÃ³n
+        // Función para abrir modal de edición
         async function openEditModal(petId) {
             try {
                 // Obtener datos de la mascota
@@ -1144,7 +1144,7 @@
             } catch (error) {
                 console.error('Error al cargar datos de mascota:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor.',
                     'error',
                     4000
@@ -1152,20 +1152,20 @@
             }
         }
 
-        // FunciÃ³n para cerrar modal de ediciÃ³n
+        // Función para cerrar modal de edición
         function closeEditModal() {
             document.getElementById('edit-pet-modal').style.display = 'none';
             document.getElementById('edit-image-preview').style.display = 'none';
         }
 
-        // FunciÃ³n para actualizar mascota
+        // Función para actualizar mascota
         async function updatePet() {
             const form = document.getElementById('edit-pet-form');
             const formData = new FormData(form);
             const petName = formData.get('nombre');
 
             try {
-                const response = await fetch('../api/pets/update_pet.php', {
+                const response = await fetch('update_pet.php', {
                     method: 'POST',
                     headers: {
                         'Authorization': 'Bearer ' + localStorage.getItem('token')
@@ -1176,7 +1176,7 @@
                 const result = await response.json();
                 if (response.ok) {
                     showToast(
-                        'Â¡Mascota Actualizada!',
+                        '¡Mascota Actualizada!',
                         `Los datos de ${petName} han sido actualizados correctamente.`,
                         'success',
                         5000
@@ -1195,7 +1195,7 @@
             } catch (error) {
                 console.error('Error al actualizar mascota:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor para actualizar la mascota.',
                     'error',
                     5000
@@ -1203,9 +1203,9 @@
             }
         }
 
-        // FunciÃ³n para eliminar mascota
+        // Función para eliminar mascota
         async function deletePet(petId, petName) {
-            if (!confirm(`Â¿EstÃ¡s seguro de que deseas eliminar a ${petName}? Esta acciÃ³n no se puede deshacer.`)) {
+            if (!confirm(`¿Estás seguro de que deseas eliminar a ${petName}? Esta acción no se puede deshacer.`)) {
                 return;
             }
 
@@ -1238,7 +1238,7 @@
             } catch (error) {
                 console.error('Error al eliminar mascota:', error);
                 showToast(
-                    'Error de ConexiÃ³n',
+                    'Error de Conexión',
                     'No se pudo conectar con el servidor para eliminar la mascota.',
                     'error',
                     5000
@@ -1283,7 +1283,7 @@
             updatePet();
         });
 
-        // Cerrar modal al hacer clic fuera de Ã©l
+        // Cerrar modal al hacer clic fuera de él
         window.onclick = function (event) {
             const modal = document.getElementById('edit-pet-modal');
             if (event.target === modal) {
@@ -1291,7 +1291,7 @@
             }
         }
 
-        // FunciÃ³n para mostrar secciones (MEJORADA)
+        // Función para mostrar secciones (MEJORADA)
         function showSection(sectionId) {
             // Ocultar todas las secciones
             const sections = document.querySelectorAll('.account-section');
@@ -1299,19 +1299,19 @@
                 section.style.display = 'none';
             });
 
-            // Mostrar la secciÃ³n seleccionada
+            // Mostrar la sección seleccionada
             document.getElementById(sectionId).style.display = 'block';
 
             const currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-            // Cargar datos especÃ­ficos segÃºn la secciÃ³n
+            // Cargar datos específicos según la sección
             if (currentUser && currentUser.rol === 'admin') {
                 if (sectionId === 'admin-panel') {
                     console.log('Cargando panel de administrador...');
                     loadPets();
                     loadAdoptionRequests();
                 } else if (sectionId === 'adoption-history') {
-                    console.log('Cargando gestiÃ³n de solicitudes de adopciÃ³n para admin...');
+                    console.log('Cargando gestión de solicitudes de adopción para admin...');
                     loadAdoptionRequests();
                 }
             } else if (sectionId === 'adoption-history') {
@@ -1321,7 +1321,7 @@
             }
         }
 
-        // FunciÃ³n setActive para cambiar el menÃº activo
+        // Función setActive para cambiar el menú activo
         function setActive(element) {
             document.querySelectorAll('.account-menu a').forEach(a => {
                 a.classList.remove('active');
@@ -1329,9 +1329,9 @@
             element.classList.add('active');
         }
 
-        // FunciÃ³n para eliminar solicitud del usuario (funciÃ³n existente)
+        // Función para eliminar solicitud del usuario (función existente)
         async function deleteAdoptionRequest(requestId) {
-            if (!confirm('Â¿EstÃ¡s seguro de que deseas eliminar esta solicitud de adopciÃ³n?')) {
+            if (!confirm('¿Estás seguro de que deseas eliminar esta solicitud de adopción?')) {
                 return;
             }
 
@@ -1339,8 +1339,8 @@
                 const token = localStorage.getItem('token');
                 if (!token) {
                     showToast(
-                        'SesiÃ³n Expirada',
-                        'Tu sesiÃ³n ha expirado. Por favor inicia sesiÃ³n nuevamente.',
+                        'Sesión Expirada',
+                        'Tu sesión ha expirado. Por favor inicia sesión nuevamente.',
                         'error',
                         5000
                     );
@@ -1358,8 +1358,8 @@
 
                 if (response.status === 401) {
                     showToast(
-                        'SesiÃ³n Expirada',
-                        'Tu sesiÃ³n ha expirado. Por favor inicia sesiÃ³n nuevamente.',
+                        'Sesión Expirada',
+                        'Tu sesión ha expirado. Por favor inicia sesión nuevamente.',
                         'error',
                         5000
                     );
@@ -1375,7 +1375,7 @@
 
                 showToast(
                     'Solicitud Cancelada',
-                    data.message || 'La solicitud de adopciÃ³n ha sido cancelada correctamente.',
+                    data.message || 'La solicitud de adopción ha sido cancelada correctamente.',
                     'success',
                     4000
                 );
@@ -1392,19 +1392,19 @@
             }
         }
 
-        // FunciÃ³n logout (debe estar definida)
+        // Función logout (debe estar definida)
         function logout() {
-            console.log('Cerrando sesiÃ³n...');
+            console.log('Cerrando sesión...');
 
             const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
             if (user.id) {
-                // Limpiar datos especÃ­ficos del usuario
+                // Limpiar datos específicos del usuario
                 sessionStorage.removeItem(`mascotaAdopcion_${user.id}`);
                 sessionStorage.removeItem(`formularioAdopcionTemp_${user.id}`);
                 localStorage.removeItem(`lastPetAdoption_${user.id}`);
             }
 
-            // Limpiar TODOS los datos de sesiÃ³n
+            // Limpiar TODOS los datos de sesión
             localStorage.removeItem('token');
             localStorage.removeItem('currentUser');
             localStorage.removeItem('isAdopter');
@@ -1413,13 +1413,13 @@
             localStorage.removeItem('lastPetAdoption');
 
             showToast(
-                'SesiÃ³n Cerrada',
-                'Has cerrado sesiÃ³n correctamente. Â¡Hasta pronto!',
+                'Sesión Cerrada',
+                'Has cerrado sesión correctamente. ¡Hasta pronto!',
                 'info',
                 3000
             );
 
-            // Intentar cerrar sesiÃ³n en el servidor
+            // Intentar cerrar sesión en el servidor
             fetch('logout.php', {
                 method: 'POST',
                 credentials: 'include'
@@ -1431,7 +1431,7 @@
             });
         }
 
-        // Funciones para editar informaciÃ³n (deben estar definidas para que funcione el formulario)
+        // Funciones para editar información (deben estar definidas para que funcione el formulario)
         function showEditForm() {
             document.getElementById('edit-user-form').style.display = 'block';
             document.getElementById('current-password').value = '';
@@ -1444,8 +1444,8 @@
         // Funciones para mostrar toast desde otros archivos (opcional)
         window.showSuccessToast = function (message) {
             showToast(
-                'OperaciÃ³n Exitosa',
-                message || 'La operaciÃ³n se completÃ³ correctamente.',
+                'Operación Exitosa',
+                message || 'La operación se completó correctamente.',
                 'success',
                 4000
             );
@@ -1468,7 +1468,7 @@
     if (select.value === 'otro') {
         otherContainer.style.display = 'block';
         otherInput.setAttribute('required', 'required');
-        otherInput.setAttribute('name', 'especie'); // ahora este es el vÃ¡lido
+        otherInput.setAttribute('name', 'especie'); // ahora este es el válido
         select.removeAttribute('name'); // se quita del select para evitar conflictos
     } else {
         otherContainer.style.display = 'none';
@@ -1487,7 +1487,7 @@
     if (select.value === 'otro') {
         otherContainer.style.display = 'block';
         otherInput.setAttribute('required', 'required');
-        otherInput.setAttribute('name', 'especie'); // ahora este es el vÃ¡lido
+        otherInput.setAttribute('name', 'especie'); // ahora este es el válido
         select.removeAttribute('name'); // se quita del select para evitar conflictos
     } else {
         otherContainer.style.display = 'none';
@@ -1501,4 +1501,3 @@
 </body>
 
 </html>
-
