@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mascotas en AdopciÃ³n</title>
+    <title>Mascotas en Adopción</title>
     <link rel="icon" href="../img/corazones-peludos-mejor.PNG">
     <link rel="stylesheet" href="../assets/css/style.css">
     <style>
@@ -105,7 +105,7 @@
             background: #0d8bf2;
         }
 
-        /* Estilos para la paginaciÃ³n */
+        /* Estilos para la paginación */
         .pagination {
             display: flex;
             justify-content: center;
@@ -172,7 +172,7 @@
 
 <body>
     <header>
-        <h1>Mascotas en AdopciÃ³n</h1>
+        <h1>Mascotas en Adopción</h1>
         <nav>
             <a href="index.html" class="btn">Volver a Inicio</a>
         </nav>
@@ -191,7 +191,7 @@
             </select>
             
             <label for="edad">Edad:</label>
-            <input type="number" id="edad" name="edad" min="1" maxlength="40" placeholder="Edad en aÃ±os">
+            <input type="number" id="edad" name="edad" min="1" maxlength="40" placeholder="Edad en años">
 
             <button onclick="applyFilters()" class="btn">Aplicar Filtros</button>
         </section>
@@ -219,12 +219,12 @@
         let currentPage = 1;
         let totalPages = 1;
 
-        // FunciÃ³n para cargar mascotas disponibles desde la base de datos
+        // Función para cargar mascotas disponibles desde la base de datos
         async function loadAvailablePets() {
             try {
                 document.getElementById('loading-message').style.display = 'block';
                 
-                // Obtener el token de autenticaciÃ³n si es necesario
+                // Obtener el token de autenticación si es necesario
                 const token = localStorage.getItem('token');
                 
                 const headers = {};
@@ -232,8 +232,8 @@
                     headers['Authorization'] = `Bearer ${token}`;
                 }
                 
-                // Hacer la peticiÃ³n al servidor para obtener las mascotas disponibles
-                const response = await fetch('../api/pets/get_pets.php', {
+                // Hacer la petición al servidor para obtener las mascotas disponibles
+                const response = await fetch('get_pets.php', {
                     method: 'GET',
                     headers: headers
                 });
@@ -263,7 +263,7 @@
             }
         }
 
-        // FunciÃ³n para aplicar los filtros
+        // Función para aplicar los filtros
         function applyFilters() {
             currentPetFilter = document.getElementById('especie').value;
             currentAgeFilter = document.getElementById('edad').value;
@@ -274,16 +274,16 @@
             displayCurrentPage();
         }
 
-        // FunciÃ³n para filtrar las mascotas segÃºn los criterios
+        // Función para filtrar las mascotas según los criterios
         function filterPets() {
-    // Especies comunes (comparar en minÃºsculas)
+    // Especies comunes (comparar en minúsculas)
     const especiesComunes = ['perro', 'gato', 'ave'];
 
-    // Obtener el valor numÃ©rico de la edad (vacÃ­o o 0 significa "todas")
+    // Obtener el valor numérico de la edad (vacío o 0 significa "todas")
     const edadFiltro = document.getElementById('edad').value;
     const edadNumerica = edadFiltro === '' ? 0 : parseFloat(edadFiltro);
 
-    // Filtrar mascotas segÃºn los filtros actuales
+    // Filtrar mascotas según los filtros actuales
     filteredPets = allPets.filter(pet => {
         // Filtrar por especie
         if (currentPetFilter !== 'todas') {
@@ -298,10 +298,10 @@
             }
         }
         
-        // Filtrar por edad (solo si se ingresÃ³ un valor)
+        // Filtrar por edad (solo si se ingresó un valor)
         if (edadNumerica > 0) {
             // Mostrar mascotas cuya edad sea igual al valor ingresado
-            // (o puedes cambiar esto para mostrar mascotas menores o mayores segÃºn prefieras)
+            // (o puedes cambiar esto para mostrar mascotas menores o mayores según prefieras)
             if (Math.floor(pet.edad) !== Math.floor(edadNumerica)) {
                 return false;
             }
@@ -310,11 +310,11 @@
         return true;
     });
     
-    // Calcular el nÃºmero total de pÃ¡ginas
+    // Calcular el número total de páginas
     totalPages = Math.ceil(filteredPets.length / petsPerPage);
 }
 
-        // FunciÃ³n para mostrar la pÃ¡gina actual
+        // Función para mostrar la página actual
         function displayCurrentPage() {
             const container = document.getElementById('lista-mascotas');
             
@@ -329,7 +329,7 @@
 
             container.innerHTML = '';
             
-            // Calcular Ã­ndices de las mascotas a mostrar
+            // Calcular índices de las mascotas a mostrar
             const startIndex = (currentPage - 1) * petsPerPage;
             const endIndex = Math.min(startIndex + petsPerPage, filteredPets.length);
             const petsToShow = filteredPets.slice(startIndex, endIndex);
@@ -350,7 +350,7 @@
             }
         }
 
-        // FunciÃ³n para crear una tarjeta de mascota
+        // Función para crear una tarjeta de mascota
 function createPetCard(pet) {
     const petCard = document.createElement('div');
     petCard.className = 'mascota';
@@ -360,7 +360,7 @@ function createPetCard(pet) {
     const tipoRaza = pet.especie.toLowerCase() === 'ave' ? 'Especie' : 'Raza';
     const valorRaza = pet.especie.toLowerCase() === 'ave' ? pet.especie : pet.raza;
 
-    // Verificar si el usuario estÃ¡ logueado
+    // Verificar si el usuario está logueado
     const isLoggedIn = localStorage.getItem('token') !== null;
     const adoptionLink = isLoggedIn ? 
         `account.html` : 
@@ -378,21 +378,21 @@ function createPetCard(pet) {
             <span class="pet-badge" style="background: #2196f3;">Disponible</span>
         </div>
         <nav style="margin-top: 15px;">
-            <a href="${adoptionLink}" class="btn">Solicitar adopciÃ³n</a>
+            <a href="${adoptionLink}" class="btn">Solicitar adopción</a>
         </nav>
     `;
 
     return petCard;
 }
         
-        // FunciÃ³n para actualizar la paginaciÃ³n
+        // Función para actualizar la paginación
         function updatePagination() {
             const paginationDiv = document.getElementById('pagination');
             paginationDiv.innerHTML = '';
             
             if (totalPages <= 1) return;
             
-            // BotÃ³n Anterior
+            // Botón Anterior
             const prevBtn = document.createElement('button');
             prevBtn.className = `page-btn ${currentPage === 1 ? 'disabled' : ''}`;
             prevBtn.innerHTML = '&laquo; Anterior';
@@ -405,7 +405,7 @@ function createPetCard(pet) {
             };
             paginationDiv.appendChild(prevBtn);
             
-            // NÃºmeros de pÃ¡gina
+            // Números de página
             const maxVisiblePages = 5;
             let startPage = Math.max(1, currentPage - Math.floor(maxVisiblePages / 2));
             let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
@@ -464,7 +464,7 @@ function createPetCard(pet) {
                 paginationDiv.appendChild(lastBtn);
             }
             
-            // BotÃ³n Siguiente
+            // Botón Siguiente
             const nextBtn = document.createElement('button');
             nextBtn.className = `page-btn ${currentPage === totalPages ? 'disabled' : ''}`;
             nextBtn.innerHTML = 'Siguiente &raquo;';
@@ -478,16 +478,16 @@ function createPetCard(pet) {
             paginationDiv.appendChild(nextBtn);
         }
 
-        // FunciÃ³n para formatear la edad (mostrar meses si es menor a 1 aÃ±o)
+        // Función para formatear la edad (mostrar meses si es menor a 1 año)
         function formatEdad(edad) {
             if (edad < 1) {
                 const meses = Math.round(edad * 12);
                 return `${meses} ${meses === 1 ? 'mes' : 'meses'}`;
             }
-            return `${edad} ${edad === 1 ? 'aÃ±o' : 'aÃ±os'}`;
+            return `${edad} ${edad === 1 ? 'año' : 'años'}`;
         }
 
-        // Cargar las mascotas al iniciar la pÃ¡gina
+        // Cargar las mascotas al iniciar la página
         document.addEventListener('DOMContentLoaded', function() {
             loadAvailablePets();
         });
@@ -495,4 +495,3 @@ function createPetCard(pet) {
 </body>
 
 </html>
-
