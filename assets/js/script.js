@@ -42,6 +42,61 @@ function filtrarMascotas() {
 }
 
 // =============================================
+// SISTEMA DE TESTIMONIOS
+// =============================================
+
+function inicializarTestimonios() {
+  // Valoración con estrellas
+  document.querySelectorAll(".estrella").forEach((estrella) => {
+    estrella.addEventListener("click", function () {
+      const valor = this.getAttribute("data-value");
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      guardarValoracion(testimonioId, valor);
+      resaltarEstrellas(testimonioId, valor);
+    });
+  });
+
+  // Sistema de respuestas
+  document.querySelectorAll(".btn-respuesta").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const formulario = this.nextElementSibling.nextElementSibling;
+      formulario.style.display = "block";
+    });
+  });
+
+  document.querySelectorAll(".form-respuesta").forEach((formulario) => {
+    formulario.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const respuesta = this.querySelector("textarea").value;
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+
+      if (respuesta.trim()) {
+        guardarRespuesta(testimonioId, respuesta);
+        this.style.display = "none";
+        this.querySelector("textarea").value = "";
+        mostrarRespuestas(testimonioId);
+      }
+    });
+  });
+
+  // Eliminar comentarios
+  document.querySelectorAll(".btn-eliminar").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      eliminarComentario(testimonioId);
+    });
+  });
+
+  // Restablecer estrellas
+  document.querySelectorAll(".btn-restablecer").forEach((boton) => {
+    boton.addEventListener("click", function () {
+      const testimonioId = this.closest(".testimonio").getAttribute("data-id");
+      restablecerEstrellas(testimonioId);
+    });
+  });
+}
+
+// =============================================
 // GRÁFICAS ESTADÍSTICAS
 // =============================================
 
