@@ -128,7 +128,7 @@ async function loadAvailablePets() {
     }
 }
 
-// Función para mostrar las mascotas (NUEVA LÓGICA)
+// Función para mostrar las mascotas
 function displayPets(pets) {
     const container = document.getElementById('pets-container');
 
@@ -137,17 +137,16 @@ function displayPets(pets) {
         return;
     }
 
-    // Especies comunes (comparar en minúsculas)
+    // Especies comunes (comparar en minusculas)
     const especiesComunes = ['perro', 'gato', 'ave'];
 
-    // Filtrar mascotas según el filtro actual
+    // Filtrar mascotas segun el filtro actual
     let filteredPets;
 
     if (currentPetFilter === 'todas') {
         filteredPets = pets;
-    } else if (currentPetFilter === 'otro') { // Cambiado de 'otros' a 'otro'
+    } else if (currentPetFilter === 'otro') {
         filteredPets = pets.filter(pet => {
-            // Convertir a minúsculas para comparación
             const especie = pet.especie.toLowerCase();
             return !especiesComunes.includes(especie);
         });
@@ -155,7 +154,7 @@ function displayPets(pets) {
         filteredPets = pets.filter(pet => pet.especie.toLowerCase() === currentPetFilter);
     }
 
-    // NUEVA FUNCIONALIDAD: Filtrar mascotas que estén realmente disponibles
+    // Filtrar mascotas que estén disponibles
     // Solo mostrar mascotas que:
     // 1. Tengan estado 'disponible'
     // 2. NO tengan solicitudes pendientes (has_pending_request = false)
