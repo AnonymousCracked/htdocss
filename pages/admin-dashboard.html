@@ -387,59 +387,88 @@
             </div>
 
             <!-- Sección de Información del Usuario -->
-            <div id="user-info" class="account-section" style="display:block;">
-                <h2>Información del usuario</h2>
-                <div class="user-details">
-                    <p><strong>Nombre:</strong> <span id="user-name"></span></p>
-                    <p><strong>Correo electrónico:</strong> <span id="user-email"></span></p>
-                    <p><strong>Teléfono:</strong> <span id="user-phone">No registrado</span></p>
-                    <p><strong>Dirección:</strong> <span id="user-address">No registrada</span></p>
-                    <p><strong>Edad:</strong> <span id="user-age">No registrada</span></p>
-                    <p><strong>Experiencia con mascotas:</strong> <span id="user-experience">No registrada</span></p>
-                    <p><strong>Fecha de registro:</strong> <span id="user-register-date"></span></p>
-                </div>
-                <button onclick="showEditForm()">Editar información</button>
+<div id="user-info" class="account-section" style="display:block;">
+    <h2>Información del usuario</h2>
+    <div class="user-details">
+        <div class="info-row">
+            <strong>Nombre:</strong>
+            <span id="user-name"></span>
+        </div>
 
-                <div id="edit-user-form" style="display:none;">
-                    <h3>Editar información</h3>
-                    <form id="updateForm">
-                        <label for="edit-name">Nombre Completo:</label>
-                        <input type="text" id="edit-name" name="edit-name" minlength="3" maxlength="35" required>
+        <div class="info-row">
+            <strong>Correo electrónico:</strong>
+            <span id="user-email"></span>
+        </div>
 
-                        <label for="edit-email">Correo Electrónico:</label>
-                        <input type="email" id="edit-email" name="edit-email" maxlength="40" required>
+        <div class="info-row">
+            <strong>Teléfono:</strong>
+            <span id="user-phone">No registrado</span>
+        </div>
 
-                        <label for="edit-phone">Teléfono:</label>
-                        <input type="tel" id="edit-phone" name="edit-phone" maxlength="10" placeholder="Ej: 6561234567"
-                            pattern="[0-9]+" title="Solo numeros" required>
+        <div class="info-row">
+            <strong>Dirección:</strong>
+            <span id="user-address">No registrada</span>
+        </div>
 
-                        <label for="edit-address">Dirección:</label>
-                        <input id="edit-address" name="edit-address" rows="3" maxlength="40" placeholder="Tu dirección completa" required></input>
+        <div class="info-row">
+            <strong>Edad:</strong>
+            <span id="user-age">No registrada</span>
+        </div>
 
-                        <label for="edit-age">Edad:</label>
-                        <input type="number" id="edit-age" name="edit-age" min="18" max="99" placeholder="Tu edad"
-                            required>
+        <div class="info-row">
+            <strong>Experiencia con mascotas:</strong>
+            <span id="user-experience" class="long-text">No registrada</span>
+        </div>
 
-                        <label for="edit-experience">Experiencia con mascotas:</label>
-                        <textarea id="edit-experience" name="edit-experience"
-                            placeholder="Describe tu experiencia con mascotas (Min 70 letras - Max 300 letras)" style="width: 25rem; height: 6rem;" minlength="70" maxlength="300" required></textarea>
+        <div class="info-row">
+            <strong>Fecha de registro:</strong>
+            <span id="user-register-date"></span>
+        </div>
+    </div>
+    <button onclick="showEditForm()">Editar información</button>
 
-                        <label for="current-password">Contraseña actual (para confirmar cambios):</label>
-                        <input type="password" id="current-password" name="current-password" minlength="8" maxlength="64" required>
+    <div id="edit-user-form" style="display:none;">
+        <h3>Editar información</h3>
+        <form id="updateForm">
+            <label for="edit-name">Nombre Completo:</label>
+            <input type="text" id="edit-name" name="edit-name" minlength="3" maxlength="35" required>
 
-                        <label for="new-password">Nueva contraseña (opcional):</label>
-                        <input type="password" id="new-password" name="new-password" minlength="8" maxlength="64" placeholder="Dejar vacío para mantener la actual">
+            <label for="edit-email">Correo Electrónico:</label>
+            <input type="email" id="edit-email" name="edit-email" maxlength="40" required>
 
-                        <label for="confirm-new-password">Confirmar nueva contraseña:</label>
-                        <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8" maxlength="64" placeholder="Confirmar nueva contraseña">
+            <label for="edit-phone">Teléfono:</label>
+            <input type="tel" id="edit-phone" name="edit-phone" maxlength="10" placeholder="Ej: 6561234567"
+                pattern="[0-9]+" title="Solo numeros" required>
 
-                        <button type="submit">Guardar cambios</button>
-                        <button type="button" onclick="hideEditForm()">Cancelar</button>
-                    </form>
-                    <p id="update-error-message" class="error-message" style="color: red; margin-top: 10px;"></p>
-                    <p id="update-success-message" class="success-message" style="color: green; margin-top: 10px;"></p>
-                </div>
-            </div>
+            <label for="edit-address">Dirección:</label>
+            <input id="edit-address" name="edit-address" rows="3" maxlength="40" placeholder="Tu dirección completa" required>
+
+            <label for="edit-age">Edad:</label>
+            <input type="number" id="edit-age" name="edit-age" min="18" max="99" placeholder="Tu edad" required>
+
+            <label for="edit-experience">Experiencia con mascotas:</label>
+            <textarea id="edit-experience" name="edit-experience"
+                placeholder="Describe tu experiencia con mascotas (Min 70 letras - Max 300 letras)" 
+                style="width: 25rem; height: 6rem;" minlength="70" maxlength="300" required></textarea>
+
+            <label for="current-password">Contraseña actual (para confirmar cambios):</label>
+            <input type="password" id="current-password" name="current-password" minlength="8" maxlength="64" required>
+
+            <label for="new-password">Nueva contraseña (opcional):</label>
+            <input type="password" id="new-password" name="new-password" minlength="8" maxlength="64" 
+                placeholder="Dejar vacío para mantener la actual">
+
+            <label for="confirm-new-password">Confirmar nueva contraseña:</label>
+            <input type="password" id="confirm-new-password" name="confirm-new-password" minlength="8" maxlength="64" 
+                placeholder="Confirmar nueva contraseña">
+
+            <button type="submit">Guardar cambios</button>
+            <button type="button" onclick="hideEditForm()">Cancelar</button>
+        </form>
+        <p id="update-error-message" class="error-message" style="color: red; margin-top: 10px;"></p>
+        <p id="update-success-message" class="success-message" style="color: green; margin-top: 10px;"></p>
+    </div>
+</div>
 
             <div id="admin-panel" class="account-section" style="display:none;">
                 <h2>Panel de Administrador</h2>

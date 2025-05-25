@@ -32,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('user-email').textContent = updatedUser.email;
                 document.getElementById('user-phone').textContent = data.adoptanteInfo?.telefono || 'No registrado';
                 document.getElementById('user-address').textContent = data.adoptanteInfo?.direccion || 'No registrada';
-                document.getElementById('user-age').textContent = data.adoptanteInfo?.edad ? data.adoptanteInfo.edad + ' aÃ±os' : 'No registrada';
+                document.getElementById('user-age').textContent = data.adoptanteInfo?.edad ? data.adoptanteInfo.edad + ' años' : 'No registrada';
                 document.getElementById('user-experience').textContent = data.adoptanteInfo?.experiencia_mascotas || 'No registrada';
                 document.getElementById('user-register-date').textContent =
                     updatedUser.fecha_registro ? new Date(updatedUser.fecha_registro).toLocaleDateString() : 'No disponible';
@@ -190,7 +190,7 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
                 document.getElementById('user-email').textContent = updatedUser.email;
                 document.getElementById('user-phone').textContent = updateData.telefono || 'No registrado';
                 document.getElementById('user-address').textContent = updateData.direccion || 'No registrada';
-                document.getElementById('user-age').textContent = updateData.edad ? updateData.edad + ' aÃ±os' : 'No registrada';
+                document.getElementById('user-age').textContent = updateData.edad ? updateData.edad + ' años' : 'No registrada';
                 document.getElementById('user-experience').textContent = updateData.experiencia_mascotas || 'No registrada';
 
                 // Limpiar campos de contraseÃ±a

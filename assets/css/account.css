@@ -9,12 +9,15 @@
   border-radius: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   overflow: hidden;
+  min-height: 500px;
 }
 
 .account-menu {
   width: 250px;
+  min-width: 250px;
   background: #ff6b6b;
   padding: 20px 0;
+  flex-shrink: 0;
 }
 
 .account-menu ul {
@@ -44,6 +47,8 @@
 .account-content {
   flex: 1;
   padding: 30px;
+  overflow-x: auto;
+  min-width: 0;
 }
 
 .account-section {
@@ -163,18 +168,29 @@
   border: 1px solid #ddd;
   padding: 15px;
   margin-bottom: 15px;
-  border-radius: 5px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .request-info {
-  flex: 1;
+  margin-bottom: 10px;
+}
+
+.request-info p {
+  margin: 8px 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .request-actions {
-  margin-left: 20px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  margin-top: 10px;
 }
 
 .delete-btn {
@@ -326,10 +342,18 @@
 @media (max-width: 768px) {
   .account-container {
     flex-direction: column;
+    margin: 10px;
   }
 
   .account-menu {
     width: 100%;
+    min-width: 100%;
+    order: 1;
+  }
+
+  .account-content {
+    order: 2;
+    padding: 20px;
   }
 
   .user-details .info-row {
@@ -340,6 +364,77 @@
   .user-details p {
     flex-direction: column;
   }
+
+  .request-item {
+    padding: 12px;
+  }
+
+  .request-actions {
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+
+  .request-actions button {
+    width: 100%;
+  }
+}
+
+/* Estados de solicitudes */
+.request-item .estado-pendiente {
+  color: #ff9800;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #fff3e0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.request-item .estado-rechazada {
+  color: #f44336;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #ffebee;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.request-item .estado-aprobada {
+  color: #4caf50;
+  font-weight: bold;
+  text-transform: uppercase;
+  background: #e8f5e8;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+}
+
+.delete-btn {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 0.9rem;
+}
+
+.delete-btn:hover {
+  background-color: #cc0000;
+}
+
+/* Mejoras para información de solicitudes */
+.request-info strong {
+  color: #333;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.request-info p {
+  margin: 8px 0;
+  line-height: 1.4;
 }
 
 @media (max-width: 480px) {
@@ -350,5 +445,22 @@
   .user-details span {
     padding: 6px 10px;
     font-size: 14px;
+  }
+
+  .account-content {
+    padding: 15px;
+  }
+
+  .request-item {
+    padding: 10px;
+  }
+
+  .request-actions {
+    gap: 8px;
+  }
+
+  .request-actions button {
+    padding: 6px 12px;
+    font-size: 0.8rem;
   }
 }
