@@ -1,4 +1,4 @@
-﻿// Verificar si el usuario estÃ¡ logueado al cargar la pÃ¡gina
+﻿// Verificar si el usuario esta logueado al cargar la pagina
 document.addEventListener('DOMContentLoaded', function () {
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function () {
         return;
     }
 
-    // Cargar informaciÃ³n adicional del usuario desde el servidor
+    // Cargar informacion adicional del usuario desde el servidor
     fetch('../api/users/get_user_info.php', {
         method: 'POST',
         headers: {
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                // Actualizar localStorage con la informaciÃ³n completa
+                // Actualizar localStorage con la informacion completa
                 const updatedUser = {
                     ...user,
                     ...data.userInfo,
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 };
                 localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
-                // Mostrar informaciÃ³n del usuario
+                // Mostrar informacion del usuario
                 document.getElementById('user-name').textContent = updatedUser.name || updatedUser.nombre;
                 document.getElementById('user-email').textContent = updatedUser.email;
                 document.getElementById('user-phone').textContent = data.adoptanteInfo?.telefono || 'No registrado';
@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 document.getElementById('user-register-date').textContent =
                     updatedUser.fecha_registro ? new Date(updatedUser.fecha_registro).toLocaleDateString() : 'No disponible';
 
-                // Rellenar formulario de ediciÃ³n
+                // Rellenar formulario de edicion
                 document.getElementById('edit-name').value = updatedUser.name || updatedUser.nombre;
                 document.getElementById('edit-email').value = updatedUser.email;
                 document.getElementById('edit-phone').value = data.adoptanteInfo?.telefono || '';
@@ -47,14 +47,14 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
         .catch(error => {
-            console.error('Error al cargar informaciÃ³n del usuario:', error);
-            // Mostrar informaciÃ³n bÃ¡sica si falla la carga
+            console.error('Error al cargar informacion del usuario:', error);
+            // Mostrar informacion basica si falla la carga
             document.getElementById('user-name').textContent = user.name;
             document.getElementById('user-email').textContent = user.email;
             document.getElementById('user-register-date').textContent =
                 user.registerDate ? new Date(user.registerDate).toLocaleDateString() : 'No disponible';
 
-            // Rellenar formulario con informaciÃ³n bÃ¡sica
+            // Rellenar formulario con informacion basica
             document.getElementById('edit-name').value = user.name;
             document.getElementById('edit-email').value = user.email;
         });
@@ -76,13 +76,13 @@ function showSection(sectionId) {
         section.style.display = 'none';
     });
 
-    // Mostrar la secciÃ³n seleccionada
+    // Mostrar la seccion seleccionada
     document.getElementById(sectionId).style.display = 'block';
 }
 
 function showEditForm() {
     document.getElementById('edit-user-form').style.display = 'block';
-    document.getElementById('current-password').value = ''; // Limpiar campo de contraseÃ±a
+    document.getElementById('current-password').value = '';
 }
 
 function hideEditForm() {
@@ -92,13 +92,13 @@ function hideEditForm() {
 function logout() {
     const user = JSON.parse(localStorage.getItem('currentUser'));
     if (user) {
-        // Limpiar datos especÃ­ficos del usuario
+        // Limpiar datos especificos del usuario
         sessionStorage.removeItem(`mascotaAdopcion_${user.id}`);
         sessionStorage.removeItem(`formularioAdopcionTemp_${user.id}`);
         localStorage.removeItem(`lastPetAdoption_${user.id}`);
     }
 
-    // Limpiar datos genÃ©ricos
+    // Limpiar datos genericos
     sessionStorage.removeItem('mascotaAdopcion');
     sessionStorage.removeItem('formularioAdopcionTemp');
     localStorage.removeItem('lastPetAdoption');
@@ -108,17 +108,17 @@ function logout() {
         method: 'POST',
         credentials: 'include'
     }).then(() => {
-        // Cerrar sesiÃ³n localmente
+        // Cerrar sesion localmente
         localStorage.removeItem('currentUser');
         window.location.href = 'login.html';
     }).catch(() => {
-        // Si falla la peticiÃ³n al servidor, igual cerrar sesiÃ³n localmente
+        // Si falla la peticion al servidor, igual cerrar sesion localmente
         localStorage.removeItem('currentUser');
         window.location.href = 'login.html';
     });
 }
 
-// Manejar el envÃ­o del formulario de actualizaciÃ³n
+// Manejar el envi­o del formulario de actualizacion
 document.getElementById('updateForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -133,14 +133,14 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
     errorMessage.textContent = '';
     successMessage.textContent = '';
 
-    // Validar nueva contraseÃ±a si se proporciona
+    // Validar nueva contraseña si se proporciona
     if (newPassword) {
         if (newPassword.length < 6) {
-            errorMessage.textContent = 'La nueva contraseÃ±a debe tener al menos 6 caracteres';
+            errorMessage.textContent = 'La nueva contraseña debe tener al menos 6 caracteres';
             return;
         }
         if (newPassword !== confirmNewPassword) {
-            errorMessage.textContent = 'Las contraseÃ±as nuevas no coinciden';
+            errorMessage.textContent = 'Las contraseñas nuevas no coinciden';
             return;
         }
     }
@@ -185,7 +185,7 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
 
                 localStorage.setItem('currentUser', JSON.stringify(updatedUser));
 
-                // Actualizar la visualizaciÃ³n
+                // Actualizar la visualizacion
                 document.getElementById('user-name').textContent = updatedUser.name;
                 document.getElementById('user-email').textContent = updatedUser.email;
                 document.getElementById('user-phone').textContent = updateData.telefono || 'No registrado';
@@ -193,24 +193,24 @@ document.getElementById('updateForm').addEventListener('submit', function (e) {
                 document.getElementById('user-age').textContent = updateData.edad ? updateData.edad + ' años' : 'No registrada';
                 document.getElementById('user-experience').textContent = updateData.experiencia_mascotas || 'No registrada';
 
-                // Limpiar campos de contraseÃ±a
+                // Limpiar campos de contraseña
                 document.getElementById('current-password').value = '';
                 document.getElementById('new-password').value = '';
                 document.getElementById('confirm-new-password').value = '';
 
-                successMessage.textContent = 'InformaciÃ³n actualizada correctamente';
+                successMessage.textContent = 'Informacion actualizada correctamente';
 
-                // Ocultar formulario despuÃ©s de 2 segundos
+                // Ocultar formulario despues de 1 segundo
                 setTimeout(() => {
                     hideEditForm();
                     successMessage.textContent = '';
-                }, 2000);
+                }, 1000);
             } else {
-                errorMessage.textContent = data.message || 'Error al actualizar la informaciÃ³n';
+                errorMessage.textContent = data.message || 'Error al actualizar la informacion';
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            errorMessage.textContent = 'Error de conexiÃ³n al actualizar la informaciÃ³n';
+            errorMessage.textContent = 'Error de conexion al actualizar la informacion';
         });
 });

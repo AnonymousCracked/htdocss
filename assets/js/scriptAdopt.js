@@ -62,12 +62,12 @@ function applyFilters() {
     displayCurrentPage();
 }
 
-// Función para filtrar las mascotas según los criterios
+// Funcion para filtrar las mascotas según los criterios
 function filterPets() {
-    // Especies comunes (comparar en minúsculas)
+    // Especies comunes (comparar en minusculas)
     const especiesComunes = ['perro', 'gato', 'ave'];
 
-    // Obtener el valor numérico de la edad (vacío o 0 significa "todas")
+    // Obtener el valor numerico de la edad (vacio o 0 significa "todas")
     const edadFiltro = document.getElementById('edad').value;
     const edadNumerica = edadFiltro === '' ? 0 : parseFloat(edadFiltro);
 
@@ -86,7 +86,7 @@ function filterPets() {
             }
         }
 
-        // Filtrar por edad (solo si se ingresó un valor)
+        // Filtrar por edad (solo si se ingreso un valor)
         if (edadNumerica > 0) {
             // Mostrar mascotas cuya edad sea igual al valor ingresado
             // (o puedes cambiar esto para mostrar mascotas menores o mayores según prefieras)
@@ -98,7 +98,7 @@ function filterPets() {
         return true;
     });
 
-    // Calcular el número total de páginas
+    // Calcular el numero total de páginas
     totalPages = Math.ceil(filteredPets.length / petsPerPage);
 }
 
@@ -162,8 +162,8 @@ function createPetCard(pet) {
         <p><strong>Sexo:</strong> ${pet.sexo}</p>
         <p><strong>Salud:</strong> ${pet.estado_salud}</p>
         <div style="margin-top: 8px;">
-            <span class="pet-badge" style="text-transform: capitalize;">${pet.especie.toLowerCase()}</span>
-            <span class="pet-badge" style="background: #2196f3;">Disponible</span>
+            <p><strong>Especie:</strong> <span class="pet-badge" style="text-transform: capitalize;">${pet.especie.toLowerCase()}</span></p>
+            <p><strong>Estado:</strong> <span class="pet-badge" style="background: #2196f3;">Disponible</span></p>
         </div>
         <nav style="margin-top: 15px;">
             <a href="${adoptionLink}" class="btn">Solicitar adopción</a>

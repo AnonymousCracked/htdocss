@@ -13,17 +13,17 @@
 
         // Validaciones
         if (!termsChecked) {
-            errorMessage.textContent = 'Debes aceptar los tÃ©rminos y condiciones';
+            errorMessage.textContent = 'Debes aceptar los terminos y condiciones';
             return;
         }
 
         if (password !== confirmPassword) {
-            errorMessage.textContent = 'Las contraseÃ±as no coinciden.';
+            errorMessage.textContent = 'Las contraseñas no coinciden.';
             return;
         }
 
         if (password.length < 6) {
-            errorMessage.textContent = 'La contraseÃ±a debe tener al menos 6 caracteres';
+            errorMessage.textContent = 'La contraseña debe tener al menos 6 caracteres';
             return;
         }
 
@@ -47,7 +47,7 @@
             })
             .catch(error => {
                 console.error('Error:', error);
-                errorMessage.textContent = 'OcurriÃ³ un error al registrar el usuario';
+                errorMessage.textContent = 'Ocurrio un error al registrar el usuario';
             });
     });
 });
