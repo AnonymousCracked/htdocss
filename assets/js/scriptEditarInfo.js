@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const user = JSON.parse(localStorage.getItem('currentUser'));
 
     if (!user) {
-        alert('Debes iniciar sesiÃ³n para acceder a esta pÃ¡gina');
+        alert('Debes iniciar sesion para acceder a esta pagina');
         window.location.href = 'login.html';
         return;
     }

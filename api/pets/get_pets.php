@@ -6,22 +6,8 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php'; 
 
-function verifyToken($token) {
-    if (empty($token)) {
-        return false;
-    }
-    return true;
-}
-
 $method = $_SERVER['REQUEST_METHOD'];
 $headers = getallheaders();
-$token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers['Authorization']) : '';
-
-if (!verifyToken($token)) {
-    http_response_code(401);
-    echo json_encode(array("message" => "Token no valido"));
-    exit();
-}
 
 if ($method !== 'GET') {
     http_response_code(405);
