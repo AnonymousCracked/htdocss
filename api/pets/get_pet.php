@@ -7,7 +7,6 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include_once '../config/conexion.php';
 
 function verifyToken($token) {
-    // Implementa tu verificaciÃ³n de token aquÃ­
     return !empty($token);
 }
 
@@ -17,13 +16,13 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'GET') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
@@ -36,7 +35,6 @@ if (!$petId) {
 }
 
 try {
-    // Consulta usando EXACTAMENTE tus columnas
     $query = "SELECT id, nombre, edad, raza, sexo, estado_salud, especie, estado, imagen 
               FROM mascotas 
               WHERE id = ?";
@@ -58,9 +56,7 @@ try {
     if ($result->num_rows > 0) {
         $pet = $result->fetch_assoc();
         
-        // Convertir tu estructura a lo que espera el frontend
         $pet['imagen_ruta'] = !empty($pet['imagen']) ? '../img/' . $pet['imagen'] : '../img/default-pet.png';
-        $pet['fecha_registro'] = null; // Tu tabla no tiene fecha
         
         http_response_code(200);
         echo json_encode($pet);

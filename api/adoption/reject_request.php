@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php';
 
-// FunciÃ³n para verificar token
+// Funcion para verificar token
 function verifyToken($token) {
     if (empty($token)) {
         return false;
@@ -38,7 +38,7 @@ function verifyToken($token) {
 try {
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
         http_response_code(405);
-        echo json_encode(["success" => false, "message" => "MÃ©todo no permitido"]);
+        echo json_encode(["success" => false, "message" => "Metodo no permitido"]);
         exit();
     }
 
@@ -54,7 +54,7 @@ try {
     $tokenData = verifyToken($token);
     if (!$tokenData) {
         http_response_code(401);
-        echo json_encode(["success" => false, "message" => "Token no vÃ¡lido"]);
+        echo json_encode(["success" => false, "message" => "Token no valido"]);
         exit();
     }
 
@@ -63,13 +63,13 @@ try {
     
     if (!$requestId || !is_numeric($requestId)) {
         http_response_code(400);
-        echo json_encode(["success" => false, "message" => "ID de solicitud invÃ¡lido"]);
+        echo json_encode(["success" => false, "message" => "ID de solicitud invalido"]);
         exit();
     }
 
-    // Iniciar transacciÃ³n
+    // Iniciar transaccion
     $conexion->begin_transaction();
-
+    // Pasos
     try {
         // PASO 1: Obtener el ID de la mascota asociada a la solicitud
         $query = "SELECT id_mascota FROM solicitudes_adopcion WHERE id = ?";
@@ -95,7 +95,7 @@ try {
         }
         
         if ($stmt->affected_rows === 0) {
-            throw new Exception("No se encontrÃ³ la solicitud o ya estaba rechazada");
+            throw new Exception("No se encontro la solicitud o ya estaba rechazada");
         }
 
         // PASO 3: Cambiar el estado de la mascota de "procesando" a "disponible"
@@ -107,7 +107,7 @@ try {
             throw new Exception("Error al actualizar el estado de la mascota");
         }
 
-        // Confirmar transacciÃ³n
+        // Confirmar transaccion
         $conexion->commit();
         
         echo json_encode([
@@ -117,7 +117,7 @@ try {
         ]);
         
     } catch (Exception $e) {
-        // Revertir transacciÃ³n en caso de error
+        // Revertir transaccion en caso de error
         $conexion->rollback();
         throw $e;
     }

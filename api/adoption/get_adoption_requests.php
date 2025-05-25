@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php';
 
-// FunciÃ³n para verificar token (la misma que usas en delete_adoption_request.php)
+// Funcion para verificar token
 function verifyToken($token) {
     if (empty($token)) {
         return false;
@@ -24,7 +24,7 @@ function verifyToken($token) {
             return false;
         }
         
-        // Verificar expiraciÃ³n si existe
+        // Verificar expiracion si existe
         if (isset($payload['exp']) && time() > $payload['exp']) {
             return false;
         }
@@ -37,10 +37,10 @@ function verifyToken($token) {
 }
 
 try {
-    // Verificar mÃ©todo
+    // Verificar metodo
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         http_response_code(405);
-        echo json_encode(["success" => false, "message" => "MÃ©todo no permitido"]);
+        echo json_encode(["success" => false, "message" => "Metodo no permitido"]);
         exit();
     }
 
@@ -56,11 +56,11 @@ try {
     $tokenData = verifyToken($token);
     if (!$tokenData) {
         http_response_code(401);
-        echo json_encode(["success" => false, "message" => "Token no vÃ¡lido"]);
+        echo json_encode(["success" => false, "message" => "Token no valido"]);
         exit();
     }
 
-    // Obtener todas las solicitudes de adopciÃ³n con informaciÃ³n del usuario y mascota
+    // Obtener todas las solicitudes de adopcion con informacion del usuario y mascota
     $query = "SELECT 
                 s.id,
                 s.id_mascota,

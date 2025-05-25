@@ -6,19 +6,18 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php';
 
-// Desactivar visualizaciÃ³n de errores en producciÃ³n
+// Desactivar visualizacion de errores en produccion
 ini_set('display_errors', 0);
 error_reporting(0);
 
 function verifyToken($token) {
-    // Implementa tu verificaciÃ³n de token aquÃ­
     return !empty($token);
 }
 
-// Verificar mÃ©todo y token
+// Verificar metodo y token
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     http_response_code(405);
-    echo json_encode(['message' => 'MÃ©todo no permitido']);
+    echo json_encode(['message' => 'Metodo no permitido']);
     exit();
 }
 
@@ -27,7 +26,7 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(['message' => 'Token no vÃ¡lido']);
+    echo json_encode(['message' => 'Token no valido']);
     exit();
 }
 
@@ -36,7 +35,7 @@ try {
     $data = json_decode(file_get_contents("php://input"), true);
     
     if (json_last_error() !== JSON_ERROR_NONE) {
-        throw new Exception('Datos JSON invÃ¡lidos');
+        throw new Exception('Datos JSON invalidos');
     }
 
     // Validar datos requeridos

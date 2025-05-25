@@ -23,7 +23,7 @@ function verifyToken($token) {
             return false;
         }
         
-        // Verificar expiraciÃ³n si existe
+        // Verificar expiracion si existe
         if (isset($payload['exp']) && time() > $payload['exp']) {
             return false;
         }
@@ -36,10 +36,10 @@ function verifyToken($token) {
 }
 
 try {
-    // Verificar mÃ©todo
+    // Verificar metodo
     if ($_SERVER['REQUEST_METHOD'] !== 'GET') {
         http_response_code(405);
-        echo json_encode(["success" => false, "message" => "MÃ©todo no permitido"]);
+        echo json_encode(["success" => false, "message" => "Metodo no permitido"]);
         exit();
     }
 
@@ -55,7 +55,7 @@ try {
     $tokenData = verifyToken($token);
     if (!$tokenData) {
         http_response_code(401);
-        echo json_encode(["success" => false, "message" => "Token no vÃ¡lido"]);
+        echo json_encode(["success" => false, "message" => "Token no valido"]);
         exit();
     }
 
@@ -67,7 +67,6 @@ try {
         exit();
     }
 
-    // CORREGIDO: usar los nombres correctos de campos segÃºn tu tabla
     $query = "SELECT s.id, s.id_adoptante, s.id_mascota, s.estado, s.motivo, s.fecha_solicitud 
               FROM solicitudes_adopcion s
               INNER JOIN adoptantes a ON s.id_adoptante = a.id

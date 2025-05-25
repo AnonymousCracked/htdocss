@@ -7,7 +7,6 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include_once '../config/conexion.php'; 
 
 function verifyToken($token) {
-    // Implement real JWT verification here
     if (empty($token)) {
         return false;
     }
@@ -15,7 +14,6 @@ function verifyToken($token) {
 }
 
 function isAdmin() {
-    // Implement real admin check here
     return true;
 }
 
@@ -25,13 +23,13 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'POST') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
@@ -60,16 +58,16 @@ if (empty($nombre) || empty($edad) || empty($raza) || empty($sexo) || empty($est
 // Procesar la imagen
 $nombreImagen = '';
 if ($imagen && $imagen['error'] === UPLOAD_ERR_OK) {
-    // Generar nombre de la imagen: nombre + raza + extensiÃ³n
+    // Generar nombre de la imagen: nombre + raza + extension
     $nombreSinEspacios = preg_replace('/\s+/', '', $nombre);
     $razaSinEspacios = preg_replace('/\s+/', '', $raza);
     $extension = pathinfo($imagen['name'], PATHINFO_EXTENSION);
     $nombreImagen = ucfirst(strtolower($nombreSinEspacios)) . ucfirst(strtolower($razaSinEspacios)) . '.' . $extension;
     
-    // Directorio donde se guardarÃ¡n las imÃ¡genes (debe existir y tener permisos)
+    // Directorio donde se guardaran las imagenes (debe existir y tener permisos)
     $directorioImagenes = __DIR__ . '/../../assets/img/';
     
-    // Mover el archivo subido al directorio de imÃ¡genes
+    // Mover el archivo subido al directorio de imagenes
     if (!move_uploaded_file($imagen['tmp_name'], $directorioImagenes . $nombreImagen)) {
         http_response_code(500);
         echo json_encode(array("message" => "Error al subir la imagen"));
@@ -81,7 +79,7 @@ $query = "INSERT INTO mascotas (nombre, edad, raza, sexo, estado_salud, especie,
 $stmt = $conexion->prepare($query);
 if (!$stmt) {
     http_response_code(500);
-    echo json_encode(array("message" => "Error en la preparaciÃ³n de la consulta: " . $conexion->error));
+    echo json_encode(array("message" => "Error en la preparacion de la consulta: " . $conexion->error));
     exit();
 }
 

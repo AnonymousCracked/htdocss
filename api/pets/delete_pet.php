@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 include_once '../config/conexion.php';
 
 function verifyToken($token) {
-    // Implementa tu verificaciÃ³n de token aquÃ­
     return !empty($token);
 }
 
@@ -23,13 +22,13 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'DELETE') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
@@ -42,7 +41,7 @@ if (!$petId) {
 }
 
 try {
-    // Verificar que la mascota existe y obtener su informaciÃ³n
+    // Verificar que la mascota existe y obtener su informacion
     $checkQuery = "SELECT id, nombre, imagen FROM mascotas WHERE id = ?";
     $checkStmt = $conexion->prepare($checkQuery);
     $checkStmt->bind_param("i", $petId);
@@ -58,7 +57,7 @@ try {
     $pet = $checkResult->fetch_assoc();
     $checkStmt->close();
 
-    // Verificar si hay solicitudes de adopciÃ³n pendientes para esta mascota
+    // Verificar si hay solicitudes de adopcion pendientes para esta mascota
     $adoptionCheckQuery = "SELECT COUNT(*) as count FROM solicitudes_adopcion WHERE id_mascota = ? AND estado = 'pendiente'";
     $adoptionCheckStmt = $conexion->prepare($adoptionCheckQuery);
     $adoptionCheckStmt->bind_param("i", $petId);
@@ -70,16 +69,16 @@ try {
     if ($pendingAdoptions > 0) {
         http_response_code(400);
         echo json_encode(array(
-            "message" => "No se puede eliminar la mascota porque tiene solicitudes de adopciÃ³n pendientes",
+            "message" => "No se puede eliminar la mascota porque tiene solicitudes de adopcion pendientes",
             "pending_requests" => $pendingAdoptions
         ));
         exit();
     }
 
-    // Iniciar transacciÃ³n
+    // Iniciar transaccion
     $conexion->autocommit(FALSE);
 
-    // Eliminar solicitudes de adopciÃ³n relacionadas (rechazadas/aprobadas)
+    // Eliminar solicitudes de adopcion relacionadas
     $deleteSolicitudesQuery = "DELETE FROM solicitudes_adopcion WHERE id_mascota = ?";
     $deleteSolicitudesStmt = $conexion->prepare($deleteSolicitudesQuery);
     $deleteSolicitudesStmt->bind_param("i", $petId);
@@ -95,14 +94,14 @@ try {
     $deletePetStmt->close();
 
     if ($result && $affectedRows > 0) {
-        // Eliminar imagen del servidor si existe y no es la imagen por defecto
+        // Eliminar imagen del servidor si existe y no es la imagen por defecto (Esto si se pone una imagen por defecto para despues)
         if ($pet['imagen'] && 
             $pet['imagen'] !== 'default-pet.png' &&
             file_exists('../../assets/img/' . $pet['imagen'])) {
             unlink('../../assets/img/' . $pet['imagen']);
         }
 
-        // Confirmar transacciÃ³n
+        // Confirmar transaccion
         $conexion->commit();
         $conexion->autocommit(TRUE);
 

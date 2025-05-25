@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php';
 
-// Desactivar mensajes de error en producciÃ³n
+// Desactivar mensajes de error en produccion
 ini_set('display_errors', 0);
 error_reporting(0);
 
@@ -37,13 +37,13 @@ try {
     $tokenData = verifyToken($token);
     if (!$tokenData) {
         http_response_code(401);
-        echo json_encode(["success" => false, "message" => "Token no vÃ¡lido"]);
+        echo json_encode(["success" => false, "message" => "Token no valido"]);
         exit();
     }
 
     if ($method !== 'DELETE') {
         http_response_code(405);
-        echo json_encode(["success" => false, "message" => "MÃ©todo no permitido"]);
+        echo json_encode(["success" => false, "message" => "Metodo no permitido"]);
         exit();
     }
 
@@ -55,8 +55,9 @@ try {
         echo json_encode(["success" => false, "message" => "ID de solicitud requerido"]);
         exit();
     }
+    // Pasos
 
-    // PASO 1: Obtener informaciÃ³n de la solicitud Y la mascota asociada ANTES de eliminar
+    // PASO 1: Obtener informacion de la solicitud Y la mascota asociada ANTES de eliminar
     $getInfoQuery = "SELECT s.id, s.id_mascota, m.id as mascota_id 
                      FROM solicitudes_adopcion s
                      INNER JOIN mascotas m ON s.id_mascota = m.id
@@ -77,7 +78,7 @@ try {
     $solicitudInfo = $result->fetch_assoc();
     $petId = $solicitudInfo['id_mascota'];
 
-    // PASO 2: Iniciar transacciÃ³n para atomicidad
+    // PASO 2: Iniciar transaccion para atomicidad
     $conexion->begin_transaction();
 
     try {
@@ -99,7 +100,7 @@ try {
             throw new Exception("Error al actualizar estado de la mascota");
         }
 
-        // PASO 5: Confirmar transacciÃ³n
+        // PASO 5: Confirmar transaccion
         $conexion->commit();
         
         echo json_encode([

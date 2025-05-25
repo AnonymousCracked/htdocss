@@ -6,7 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 include("../config/conexion.php");
 
-// Verificar mÃ©todo POST
+// Verificar metodo POST
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'MÃ©todo no permitido']);
@@ -26,14 +26,14 @@ if (empty($user_id)) {
 }
 
 try {
-    // Obtener informaciÃ³n de la tabla usuarios
+    // Obtener informacion de la tabla usuarios
     $stmt_user = $conexion->prepare("SELECT id, nombre, email, rol, fecha_registro FROM usuarios WHERE id = ?");
     $stmt_user->bind_param("i", $user_id);
     $stmt_user->execute();
     $result_user = $stmt_user->get_result();
     
     if ($user_data = $result_user->fetch_assoc()) {
-        // Obtener informaciÃ³n de la tabla adoptantes si existe
+        // Obtener informacion de la tabla adoptantes si existe
         $stmt_adoptante = $conexion->prepare("
             SELECT nombre_completo, direccion, telefono, correo, edad, experiencia_mascotas 
             FROM adoptantes 
@@ -65,7 +65,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'Error al obtener informaciÃ³n del usuario',
+        'message' => 'Error al obtener informacion del usuario',
         'error' => $e->getMessage()
     ]);
 }

@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt = $conexion->prepare($sql);
     
     if (!$stmt) {
-        echo "Error en la preparaciÃ³n de la consulta: " . $conexion->error;
+        echo "Error en la preparacion de la consulta: " . $conexion->error;
         exit;
     }
     

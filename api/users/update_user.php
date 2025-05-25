@@ -6,10 +6,10 @@ header("Access-Control-Allow-Headers: Content-Type");
 
 include("../config/conexion.php");
 
-// Verificar mÃ©todo POST
+// Verificar metodo POST
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     http_response_code(405);
-    echo json_encode(['success' => false, 'message' => 'MÃ©todo no permitido']);
+    echo json_encode(['success' => false, 'message' => 'Metodo no permitido']);
     exit;
 }
 
@@ -37,7 +37,7 @@ if (empty($user_id) || empty($nombre) || empty($email) || empty($current_passwor
 }
 
 try {
-    // Verificar contraseÃ±a actual
+    // Verificar contraseña actual
     $stmt_verify = $conexion->prepare("SELECT password FROM usuarios WHERE id = ?");
     $stmt_verify->bind_param("i", $user_id);
     $stmt_verify->execute();
@@ -46,7 +46,7 @@ try {
     if ($user = $result->fetch_assoc()) {
         if (!password_verify($current_password, $user['password'])) {
             http_response_code(401);
-            echo json_encode(['success' => false, 'message' => 'ContraseÃ±a actual incorrecta']);
+            echo json_encode(['success' => false, 'message' => 'Contraseña actual incorrecta']);
             exit;
         }
     } else {
@@ -55,7 +55,7 @@ try {
         exit;
     }
     
-    // Verificar si el nuevo email ya existe (si cambiÃ³)
+    // Verificar si el nuevo email ya existe
     $stmt_email = $conexion->prepare("SELECT id FROM usuarios WHERE email = ? AND id != ?");
     $stmt_email->bind_param("si", $email, $user_id);
     $stmt_email->execute();
@@ -65,7 +65,7 @@ try {
         exit;
     }
     
-    // Iniciar transacciÃ³n
+    // Iniciar transaccion
     $conexion->begin_transaction();
     
     // Actualizar tabla usuarios
@@ -116,12 +116,12 @@ try {
         }
     }
     
-    // Confirmar transacciÃ³n
+    // Confirmar transaccion
     $conexion->commit();
     
     echo json_encode([
         'success' => true,
-        'message' => 'InformaciÃ³n actualizada correctamente'
+        'message' => 'Informacion actualizada correctamente'
     ]);
     
 } catch (Exception $e) {

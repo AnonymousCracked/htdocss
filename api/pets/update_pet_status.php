@@ -6,9 +6,7 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 
 include_once '../config/conexion.php';
 
-function verifyToken($token)
-{
-    // Implementa tu verificaciÃ³n de token aquÃ­
+function verifyToken($token){
     return !empty($token);
 }
 
@@ -18,13 +16,13 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'POST') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
@@ -46,3 +44,4 @@ if ($stmt->execute()) {
 }
 
 $stmt->close();
+?>

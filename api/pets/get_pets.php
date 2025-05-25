@@ -19,17 +19,17 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'GET') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
-// Consulta mejorada que incluye verificaciÃ³n de solicitudes pendientes
+// Consulta para la verificacion de solicitudes pendientes
 $query = "SELECT 
             m.*, 
             CONCAT('../img/', m.imagen) as imagen_ruta,

@@ -1692,6 +1692,7 @@ button:hover {
 .request-info p {
   margin: 5px 0;
   font-size: 0.95rem;
+  word-wrap: break-word;
 }
 
 .request-info strong {

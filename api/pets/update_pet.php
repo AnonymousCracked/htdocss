@@ -7,7 +7,6 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 include_once '../config/conexion.php';
 
 function verifyToken($token) {
-    // Implementa tu verificaciÃ³n de token aquÃ­
     return !empty($token);
 }
 
@@ -17,13 +16,13 @@ $token = isset($headers['Authorization']) ? str_replace('Bearer ', '', $headers[
 
 if (!verifyToken($token)) {
     http_response_code(401);
-    echo json_encode(array("message" => "Token no vÃ¡lido"));
+    echo json_encode(array("message" => "Token no valido"));
     exit();
 }
 
 if ($method !== 'POST') {
     http_response_code(405);
-    echo json_encode(array("message" => "MÃ©todo no permitido"));
+    echo json_encode(array("message" => "Metodo no permitido"));
     exit();
 }
 
@@ -46,14 +45,14 @@ if (!$petId || empty($nombre) || empty($raza) || empty($sexo) || empty($estado_s
 
 if ($edad < 0 || $edad > 30) {
     http_response_code(400);
-    echo json_encode(array("message" => "La edad debe estar entre 0 y 30 aÃ±os"));
+    echo json_encode(array("message" => "La edad debe estar entre 0 y 30 años"));
     exit();
 }
 
-// Validar enum values segÃºn tu estructura
+// Validar enum values
 $validSexo = ['macho', 'hembra'];
 $validEstadoSalud = ['bueno', 'regular', 'malo'];
-$validEstado = ['disponible', 'procesando', 'adoptada'];
+$validEstado = ['disponible', 'procesando'];
 
 if (!in_array($sexo, $validSexo)) {
     http_response_code(400);
@@ -84,7 +83,7 @@ try {
     $existingPet = $checkResult->fetch_assoc();
     $checkStmt->close();
 
-    // Manejar la imagen si se subiÃ³ una nueva
+    // Manejar la imagen si se subio una nueva
     $imagenNombre = $existingPet['imagen']; // Mantener la imagen actual por defecto
 
     if (isset($_FILES['imagen']) && $_FILES['imagen']['error'] === UPLOAD_ERR_OK) {
@@ -104,7 +103,7 @@ try {
             exit();
         }
 
-        // Generar nombre Ãºnico para la imagen
+        // Generar nombre unico para la imagen
         $fileName = 'pet_' . $petId . '_' . time() . '.' . $imageFileType;
         $targetPath = $uploadDir . $fileName;
 
@@ -124,7 +123,7 @@ try {
         }
     }
 
-    // Actualizar la mascota usando EXACTAMENTE tus columnas
+    // Actualizar la mascota
     $query = "UPDATE mascotas 
               SET nombre = ?, edad = ?, raza = ?, sexo = ?, estado_salud = ?, 
                   especie = ?, estado = ?, imagen = ?

@@ -4,7 +4,7 @@ session_start();
 // Destruir todas las variables de sesiÃ³n
 $_SESSION = array();
 
-// Destruir la cookie de sesiÃ³n si existe
+// Destruir la cookie de sesion si existe
 if (ini_get("session.use_cookies")) {
     $params = session_get_cookie_params();
     setcookie(session_name(), '', time() - 42000,
@@ -13,10 +13,10 @@ if (ini_get("session.use_cookies")) {
     );
 }
 
-// Destruir la sesiÃ³n
+// Destruir la sesion
 session_destroy();
 
-// Responder con Ã©xito
+// Responder con exito
 header('Content-Type: application/json');
-echo json_encode(['success' => true, 'message' => 'SesiÃ³n cerrada correctamente']);
+echo json_encode(['success' => true, 'message' => 'Sesion cerrada correctamente']);
 ?>

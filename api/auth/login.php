@@ -1,5 +1,5 @@
 ﻿<?php
-// ConfiguraciÃ³n para mostrar todos los errores
+// Configuracion para mostrar todos los errores
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
@@ -35,7 +35,7 @@ function generateSimpleToken($userId, $email) {
     return $headerEncoded . "." . $payloadEncoded . "." . $signature;
 }
 
-// ConexiÃ³n a la BD con manejo de errores detallado
+// Conexion a la BD con manejo de errores detallado
 $conn = new mysqli("localhost", "root", "", "corazones_peludos");
 
 // Verificar conexiÃ³n
@@ -43,13 +43,13 @@ if ($conn->connect_error) {
     http_response_code(500);
     echo json_encode([
         'success' => false, 
-        'message' => 'Error de conexiÃ³n a la base de datos',
+        'message' => 'Error de conexion a la base de datos',
         'error_details' => $conn->connect_error
     ]);
     exit;
 }
 
-// Procesar peticiÃ³n POST
+// Procesar peticion POST
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Leer datos de entrada
     $json = file_get_contents('php://input');
@@ -60,18 +60,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $data = $_POST;
     }
 
-    // DepuraciÃ³n: imprimir todos los datos recibidos
+    // Imprimir todos los datos recibidos (para debug)
     error_log("Datos recibidos: " . print_r($data, true));
 
     $email = $data['email'] ?? '';
     $password = $data['password'] ?? '';
 
-    // Validar campos vacÃ­os
+    // Validar campos vacios
     if (empty($email) || empty($password)) {
         http_response_code(400);
         echo json_encode([
             'success' => false, 
-            'message' => 'Email y contraseÃ±a son obligatorios.',
+            'message' => 'Email y contraseña son obligatorios.',
             'received_email' => $email,
             'received_password_length' => strlen($password)
         ]);
@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         http_response_code(500);
         echo json_encode([
             'success' => false, 
-            'message' => 'Error en la preparaciÃ³n de la consulta',
+            'message' => 'Error en la preparacion de la consulta',
             'error_details' => $conn->error
         ]);
         exit;
@@ -97,10 +97,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Validar usuario
     if ($user = $result->fetch_assoc()) {
-        // DepuraciÃ³n: imprimir informaciÃ³n del usuario
+        // Imprime info del usuario (solo para debug)
         error_log("Usuario encontrado: " . print_r($user, true));
 
-        // Verificar contraseÃ±a
+        // Verificar contraseña
         if (password_verify($password, $user['password'])) {
             $_SESSION['usuario_id'] = $user['id'];
             $_SESSION['rol'] = $user['rol'];
@@ -122,7 +122,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             http_response_code(401);
             echo json_encode([
                 'success' => false, 
-                'message' => 'ContraseÃ±a incorrecta.',
+                'message' => 'Contraseña incorrecta.',
                 'debug' => [
                     'stored_hash' => $user['password'],
                     'input_password' => $password
