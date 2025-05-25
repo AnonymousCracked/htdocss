@@ -189,10 +189,15 @@ function displayPets(pets) {
                         <p><strong>Raza:</strong> ${pet.raza}</p>
                         <p><strong>Sexo:</strong> ${pet.sexo}</p>
                         <p><strong>Salud:</strong> ${pet.estado_salud}</p>
-                        <div style="margin-top: 8px;">
-                            <span class="pet-badge">${pet.especie}</span>
-                            <span class="pet-badge" style="background: #2196f3;">Disponible</span>
-                        </div>
+                        <p><strong>Especie:</strong> ${pet.especie}</p>
+                                    <p><strong>Estado:</strong> 
+                                        <span style="color: ${pet.estado === 'adoptado' ? '#4caf50' : '#2196f3'}; 
+                                                     font-weight: bold; text-transform: uppercase; 
+                                                     background: ${pet.estado === 'adoptado' ? '#4caf5020' : '#2196f320'}; 
+                                                     padding: 4px 8px; border-radius: 4px;">
+                                            ${pet.estado}
+                                        </span>
+                                    </p>
                     </div>
                 `;
 
